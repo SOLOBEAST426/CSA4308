@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML Lab Experiments</title>
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,17 +12,14 @@
             margin: 0;
             padding: 30px 15px;
         }
-
         h1 {
             text-align: center;
             color: #172554;
         }
-
         .container {
             max-width: 750px;
             margin: auto;
         }
-
         .experiment {
             background: white;
             padding: 18px;
@@ -35,7 +31,6 @@
             gap: 12px;
             flex-wrap: wrap;
         }
-
         a {
             text-decoration: none;
             padding: 9px 13px;
@@ -43,43 +38,33 @@
             color: white;
             background: #2563eb;
         }
-
         .code {
             background: #374151;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>HTML Lab Experiments</h1>
-
         <p style="text-align:center">
             View the output or inspect the source code.
         </p>
-
         <div id="experiments"></div>
     </div>
 
     <script>
         const files = [
-            "1Q .html",
-            "2Q .html",
-            "3Q .html",
-            "4Q .html",
-            "5Q .html",
-            "6Q .html",
-            "7Q .html",
-            "8Q .html",
-            "9Q .html",
+            "1Q .html", "2Q .html", "3Q .html",
+            "4Q .html", "5Q .html", "6Q .html",
+            "7Q .html", "8Q .html", "9Q .html",
             "10Q .html"
         ];
 
-        const folder = "Questions-1-10/";
         const list = document.getElementById("experiments");
 
         files.forEach((file, index) => {
-           const path = "Questions-1-10/" + file.split(" ").join("%20");
+            const path = "Questions-1-10/" +
+                file.replace(/ /g, "%20");
 
             const row = document.createElement("div");
             row.className = "experiment";
@@ -93,8 +78,8 @@
 
             const code = document.createElement("a");
             code.href =
-                "https://github.com/SOLOBEAST426/CSA4308/blob/main/"
-                + path;
+                "https://github.com/SOLOBEAST426/CSA4308/blob/main/" +
+                path;
             code.textContent = "View Code";
             code.className = "code";
 
