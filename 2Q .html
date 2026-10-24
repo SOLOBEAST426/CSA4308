@@ -1,0 +1,1653 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stayora | Hotel Booking</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f7f7f5;
+    color: #252a30;
+    line-height: 1.6;
+}
+
+header {
+    background: #172c2b;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 800;
+    color: #d9bc83;
+    letter-spacing: 1px;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #d9bc83;
+}
+
+.hero {
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    padding: 65px 8%;
+    color: white;
+    background:
+        linear-gradient(90deg, rgba(12, 31, 29, .92),
+        rgba(12, 31, 29, .3)),
+        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
+}
+
+.hero-content {
+    max-width: 650px;
+}
+
+.hero h1 {
+    font-size: clamp(35px, 5vw, 60px);
+    line-height: 1.12;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #e2c58f;
+}
+
+.hero p {
+    color: #f0f0ed;
+    margin-bottom: 25px;
+    font-size: 17px;
+}
+
+.btn {
+    background: #b48a4b;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    transition: .25s;
+}
+
+.btn:hover {
+    background: #916b34;
+    transform: translateY(-2px);
+}
+
+.btn-dark {
+    background: #172c2b;
+}
+
+.btn-danger {
+    background: #b42332;
+}
+
+.btn-small {
+    padding: 7px 11px;
+    font-size: 12px;
+}
+
+section {
+    padding: 55px 7%;
+    scroll-margin-top: 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-title h2 {
+    font-size: 32px;
+    color: #172c2b;
+}
+
+.section-title p {
+    color: #747a7a;
+    margin-top: 7px;
+}
+
+.search-panel {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px #172c2b12;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 2;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #d8dcd8;
+    border-radius: 6px;
+    background: white;
+    color: #252a30;
+    font-size: 14px;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #dfc18b;
+    border-color: #b48a4b;
+}
+
+.rooms {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+    gap: 23px;
+}
+
+.room-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 22px #172c2b0c;
+    transition: .3s;
+}
+
+.room-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px #172c2b18;
+}
+
+.room-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    display: block;
+}
+
+.room-info {
+    padding: 20px;
+}
+
+.room-info h3 {
+    font-size: 21px;
+    color: #172c2b;
+}
+
+.room-info p {
+    color: #6e7775;
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.price {
+    color: #a67939;
+    font-weight: 800;
+    font-size: 22px;
+    margin: 12px 0;
+}
+
+.tag {
+    display: inline-block;
+    background: #e9f2e9;
+    color: #30653b;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.feature-card {
+    background: white;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px #172c2b0b;
+}
+
+.feature-card .icon {
+    font-size: 30px;
+}
+
+.feature-card h3 {
+    margin: 10px 0;
+    color: #172c2b;
+}
+
+.feature-card p {
+    color: #737b79;
+    font-size: 14px;
+}
+
+.dashboard {
+    background: #edf1ed;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px #172c2b0b;
+    margin-bottom: 22px;
+    min-width: 0;
+}
+
+.panel h3 {
+    color: #172c2b;
+    margin-bottom: 17px;
+}
+
+.grid-two {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 22px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #e8ebe7;
+}
+
+th {
+    background: #f1f4ef;
+    color: #172c2b;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.message {
+    margin-top: 12px;
+    color: #27643a;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.error {
+    color: #b42332;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.faq-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #e3e6e1;
+}
+
+.faq-item summary {
+    font-weight: 700;
+    cursor: pointer;
+    color: #172c2b;
+}
+
+.faq-item p {
+    margin-top: 10px;
+    color: #67706c;
+}
+
+footer {
+    background: #172c2b;
+    color: #e1e6e1;
+    padding: 35px 7%;
+    text-align: center;
+}
+
+footer strong {
+    color: #d9bc83;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #d9bc83;
+}
+
+.notice {
+    background: #fff7e6;
+    border-left: 4px solid #b48a4b;
+    padding: 14px;
+    border-radius: 5px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+@media(max-width: 650px) {
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .hero {
+        min-height: 400px;
+        padding: 45px 6%;
+    }
+
+    section {
+        padding: 40px 5%;
+    }
+
+    .search-panel {
+        margin-top: -20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="logo">STAYORA.</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#about">About</a>
+        <a href="#bookings">My Bookings</a>
+        <a href="#account">Account</a>
+        <a href="#admin">Admin</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <p>YOUR NEXT STAY STARTS HERE</p>
+
+        <h1>Stay somewhere<br><span>extraordinary.</span></h1>
+
+        <p>
+            Discover thoughtfully designed rooms, exceptional comfort,
+            and memorable hospitality. Find the perfect stay for your journey.
+        </p>
+
+        <a href="#rooms" class="btn">Explore Our Rooms</a>
+    </div>
+</section>
+
+<!-- SEARCH -->
+<section style="padding-top:0">
+    <form class="search-panel" id="searchForm">
+        <div class="field">
+            <label for="destination">Destination</label>
+            <input id="destination" type="text"
+                placeholder="City or hotel" value="Stayora Hotel">
+        </div>
+
+        <div class="field">
+            <label for="checkin">Check-in</label>
+            <input id="checkin" type="date" required>
+        </div>
+
+        <div class="field">
+            <label for="checkout">Check-out</label>
+            <input id="checkout" type="date" required>
+        </div>
+
+        <div class="field">
+            <label for="guests">Guests</label>
+            <select id="guests">
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+            </select>
+        </div>
+
+        <div class="field" style="display:flex;align-items:end">
+            <button class="btn" type="submit" style="width:100%">
+                Search Availability
+            </button>
+        </div>
+    </form>
+    <p id="searchMessage" class="message"></p>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms">
+    <div class="section-title">
+        <h2>Rooms & Suites</h2>
+        <p>Four thoughtfully designed options for every kind of traveller.</p>
+    </div>
+
+    <div class="rooms" id="roomList"></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:#edf1ed">
+    <div class="section-title">
+        <h2>The Stayora Experience</h2>
+        <p>More than a room. A better way to travel.</p>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <div class="icon">🛏️</div>
+            <h3>Thoughtful Comfort</h3>
+            <p>Relax in carefully designed spaces with modern amenities.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">📍</div>
+            <h3>Convenient Location</h3>
+            <p>Plan your journey with access to local attractions and transport.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🔒</div>
+            <h3>Booking Transparency</h3>
+            <p>Review your dates, guest count, and estimated cost before booking.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">💬</div>
+            <h3>Guest Support</h3>
+            <p>Find answers to common questions and contact the hotel team.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ACCOUNT -->
+<section id="account">
+    <div class="section-title">
+        <h2>Your Account</h2>
+        <p>Register to manage your profile and booking history.</p>
+    </div>
+
+    <div class="grid-two">
+        <div class="panel">
+            <h3>Create an Account</h3>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input id="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input id="phone" type="tel" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password"
+                        minlength="6" required>
+                </div>
+
+                <button class="btn" type="submit">Register</button>
+                <p id="registerMessage" class="message"></p>
+            </form>
+        </div>
+
+        <div class="panel">
+            <h3>Login</h3>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input id="loginEmail" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input id="loginPassword" type="password" required>
+                </div>
+
+                <button class="btn" type="submit">Login</button>
+                <button class="btn btn-dark" type="button"
+                    id="logoutButton">Logout</button>
+
+                <p id="loginMessage" class="message"></p>
+            </form>
+
+            <div id="profilePanel" class="hidden" style="margin-top:20px">
+                <h3>My Profile</h3>
+                <p id="profileDetails"></p>
+                <button class="btn" id="editProfileButton"
+                    style="margin-top:12px">Edit Profile</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BOOKINGS -->
+<section class="dashboard" id="bookings">
+    <div class="section-title">
+        <h2>My Bookings</h2>
+        <p>View your reservations and manage eligible bookings.</p>
+    </div>
+
+    <div class="notice">
+        Demonstration policy: modification and cancellation are available
+        at least 3 days before check-in. Reservations closer to arrival
+        require assistance from the hotel.
+    </div>
+
+    <div class="panel">
+        <h3>Booking History</h3>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Room</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Guests</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="bookingTable">
+                    <tr>
+                        <td colspan="8">Log in to view your bookings.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p id="bookingMessage" class="message"></p>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+    <div class="section-title">
+        <h2>Guest Reviews</h2>
+        <p>Share feedback about your stay.</p>
+    </div>
+
+    <div class="grid-two">
+        <div class="panel">
+            <h3>Write a Review</h3>
+
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <select id="rating">
+                        <option value="5">★★★★★ — Excellent</option>
+                        <option value="4">★★★★ — Very Good</option>
+                        <option value="3">★★★ — Good</option>
+                        <option value="2">★★ — Fair</option>
+                        <option value="1">★ — Poor</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reviewText">Your Review</label>
+                    <textarea id="reviewText" rows="4" required></textarea>
+                </div>
+
+                <button class="btn" type="submit">Submit Review</button>
+                <p id="reviewMessage" class="message"></p>
+            </form>
+        </div>
+
+        <div class="panel">
+            <h3>Recent Guest Feedback</h3>
+            <div id="reviewList">
+                <p>★★★★★</p>
+                <p>“A comfortable stay and a smooth booking experience.”</p>
+                <hr style="margin:15px 0;border:0;border-top:1px solid #eee">
+                <p>★★★★</p>
+                <p>“Clean rooms and convenient facilities.”</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ADMIN -->
+<section id="admin" style="background:#edf1ed">
+    <div class="section-title">
+        <h2>Administrator Dashboard</h2>
+        <p>Manage room inventory, prices, and reservations.</p>
+    </div>
+
+    <div class="notice">
+        This is a classroom demonstration, not a secure administrator portal.
+        Do not use it to manage real customer or payment data.
+    </div>
+
+    <div class="panel">
+        <h3>Room Inventory and Pricing</h3>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Room Type</th>
+                        <th>Price per Night (₹)</th>
+                        <th>Total Rooms</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody id="adminRoomTable"></tbody>
+            </table>
+        </div>
+
+        <p id="adminMessage" class="message"></p>
+    </div>
+
+    <div class="panel">
+        <h3>Manage All Reservations</h3>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Customer</th>
+                        <th>Room</th>
+                        <th>Dates</th>
+                        <th>Status</th>
+                        <th>Admin Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="adminBookingTable"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+    <div class="section-title">
+        <h2>Frequently Asked Questions</h2>
+        <p>Quick answers to common booking questions.</p>
+    </div>
+
+    <div class="panel">
+        <details class="faq-item">
+            <summary>How do I book a room?</summary>
+            <p>Select your dates, choose the room type, enter guest details,
+            and confirm the reservation.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Can I modify my booking?</summary>
+            <p>This demonstration permits modification at least three days
+            before arrival, subject to room availability.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Can I cancel a reservation?</summary>
+            <p>Eligible bookings can be cancelled at least three days before
+            arrival under the demonstration policy.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Does this website process online payments?</summary>
+            <p>No. A real deployment needs a secure payment gateway and
+            server-side payment verification.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Will I receive a confirmation email?</summary>
+            <p>This frontend does not send emails. An email service must be
+            connected to the backend to deliver booking confirmations.</p>
+        </details>
+    </div>
+</section>
+
+<!-- TRAVEL GUIDE -->
+<section id="travel" style="background:#edf1ed">
+    <div class="section-title">
+        <h2>Local Travel Guide</h2>
+        <p>Plan the journey around your stay.</p>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <div class="icon">🚕</div>
+            <h3>Getting Around</h3>
+            <p>Check local taxi, bus, metro, and airport transfer options
+            before travelling.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🗺️</div>
+            <h3>Explore Locally</h3>
+            <p>Ask the hotel for nearby attractions, restaurants, and
+            sightseeing recommendations.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🧳</div>
+            <h3>Before You Arrive</h3>
+            <p>Keep your booking reference and identification ready for
+            check-in.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section-title">
+        <h2>Contact Us</h2>
+        <p>Our hospitality team is here to help.</p>
+    </div>
+
+    <div class="grid-two">
+        <div class="panel">
+            <h3>Hotel Information</h3>
+            <p><strong>Address:</strong> Stayora Hotel, Sample City</p>
+            <p><strong>Email:</strong> support@stayora.example</p>
+            <p><strong>Phone:</strong> +91 98765 43210</p>
+            <p><strong>Reception:</strong> Open 24 hours (sample information)</p>
+        </div>
+
+        <div class="panel">
+            <h3>Send a Message</h3>
+
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="contactName">Name</label>
+                    <input id="contactName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input id="contactEmail" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" rows="4" required></textarea>
+                </div>
+
+                <button class="btn" type="submit">Send Message</button>
+                <p id="contactResult" class="message"></p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy" style="background:#edf1ed">
+    <div class="section-title">
+        <h2>Privacy Policy</h2>
+        <p>How guest information should be handled.</p>
+    </div>
+
+    <div class="panel">
+        <h3>Information Collection</h3>
+        <p>
+            A real hotel booking service may collect guest contact details,
+            reservation dates, and booking preferences to manage reservations.
+        </p>
+
+        <h3 style="margin-top:18px">Data Protection</h3>
+        <p>
+            A production service should use secure authentication, encrypted
+            connections, access controls, and appropriate data-retention
+            policies.
+        </p>
+
+        <h3 style="margin-top:18px">Payments</h3>
+        <p>
+            Payment details should be handled by a trusted payment provider.
+            Never store raw card details or CVV numbers in this website.
+        </p>
+    </div>
+</section>
+
+<footer>
+    <strong>STAYORA.</strong>
+    <p>Your comfort. Your journey. Your stay.</p>
+
+    <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#faq">FAQs</a>
+        <a href="#travel">Travel Guide</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <p>© 2026 Stayora Hotel Booking System | Internet Programming Lab</p>
+</footer>
+
+<script>
+"use strict";
+
+// Demo data. Prices and room counts are illustrative.
+const STORAGE_KEY = "stayora_lab_demo_v1";
+
+const initialRooms = [
+    {
+        id: 1,
+        name: "Standard Room",
+        price: 2500,
+        quantity: 10,
+        capacity: 2,
+        image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=80",
+        description: "A comfortable room for solo travellers and couples.",
+        amenities: "Wi-Fi, Air Conditioning, TV"
+    },
+    {
+        id: 2,
+        name: "Deluxe Room",
+        price: 4000,
+        quantity: 8,
+        capacity: 2,
+        image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80",
+        description: "Extra space and premium amenities for a relaxing stay.",
+        amenities: "Wi-Fi, AC, TV, Mini Fridge"
+    },
+    {
+        id: 3,
+        name: "Suite Room",
+        price: 6500,
+        quantity: 5,
+        capacity: 3,
+        image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80",
+        description: "A spacious suite for guests seeking extra comfort.",
+        amenities: "Wi-Fi, Lounge, AC, Breakfast"
+    },
+    {
+        id: 4,
+        name: "Family Room",
+        price: 8000,
+        quantity: 4,
+        capacity: 4,
+        image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80",
+        description: "A larger room for families and small groups.",
+        amenities: "Wi-Fi, Multiple Beds, AC, TV"
+    }
+];
+
+let rooms = [];
+let users = [];
+let bookings = [];
+let reviews = [];
+let currentUser = null;
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (saved) {
+            const state = JSON.parse(saved);
+
+            if (Array.isArray(state.rooms) &&
+                Array.isArray(state.users) &&
+                Array.isArray(state.bookings) &&
+                Array.isArray(state.reviews)) {
+                rooms = state.rooms;
+                users = state.users;
+                bookings = state.bookings;
+                reviews = state.reviews;
+                return;
+            }
+        }
+    } catch (error) {
+        console.warn("Saved demo data could not be loaded.", error);
+    }
+
+    rooms = initialRooms.map(room => ({ ...room }));
+    users = [];
+    bookings = [];
+    reviews = [];
+    saveState();
+}
+
+function saveState() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            rooms, users, bookings, reviews
+        }));
+    } catch (error) {
+        console.warn("Browser storage is unavailable.", error);
+    }
+}
+
+function showMessage(id, message, isError = false) {
+    const element = document.getElementById(id);
+    element.textContent = message;
+    element.classList.toggle("error", isError);
+}
+
+function localDateString(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
+function todayString() {
+    return localDateString(new Date());
+}
+
+function addDays(dateString, days) {
+    const date = new Date(dateString + "T12:00:00");
+    date.setDate(date.getDate() + days);
+    return localDateString(date);
+}
+
+function dateIsValid(dateString) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return false;
+
+    const date = new Date(dateString + "T12:00:00");
+    return !Number.isNaN(date.getTime()) &&
+        localDateString(date) === dateString;
+}
+
+function validDateRange(checkin, checkout) {
+    return dateIsValid(checkin) &&
+        dateIsValid(checkout) &&
+        checkin >= todayString() &&
+        checkout > checkin;
+}
+
+function nightsBetween(checkin, checkout) {
+    return Math.round(
+        (new Date(checkout + "T12:00:00") -
+         new Date(checkin + "T12:00:00")) / 86400000
+    );
+}
+
+function formatDate(date) {
+    if (!date) return "—";
+
+    return new Date(date + "T12:00:00").toLocaleDateString("en-IN");
+}
+
+function money(amount) {
+    return "₹" + Number(amount).toLocaleString("en-IN");
+}
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
+function occupiedRooms(roomId, checkin, checkout, excludeId = null) {
+    return bookings.filter(booking =>
+        booking.roomId === roomId &&
+        booking.status === "Confirmed" &&
+        booking.id !== excludeId &&
+        booking.checkin < checkout &&
+        booking.checkout > checkin
+    ).length;
+}
+
+function availableRooms(room, checkin, checkout, excludeId = null) {
+    return room.quantity -
+        occupiedRooms(room.id, checkin, checkout, excludeId);
+}
+
+function renderRooms(checkin = "", checkout = "", guests = 1) {
+    const list = document.getElementById("roomList");
+
+    list.innerHTML = rooms.map(room => {
+        let availability = room.quantity;
+
+        if (checkin && checkout && validDateRange(checkin, checkout)) {
+            availability = availableRooms(room, checkin, checkout);
+        }
+
+        const canFitGuests = room.capacity >= Number(guests);
+
+        return `
+            <article class="room-card">
+                <img src="${escapeHTML(room.image)}"
+                     alt="${escapeHTML(room.name)}"
+                     loading="lazy">
+
+                <div class="room-info">
+                    <span class="tag">
+                        ${availability > 0 && canFitGuests
+                            ? "Available"
+                            : "Check availability"}
+                    </span>
+
+                    <h3>${escapeHTML(room.name)}</h3>
+                    <p>${escapeHTML(room.description)}</p>
+                    <p><strong>Amenities:</strong>
+                        ${escapeHTML(room.amenities)}</p>
+                    <p><strong>Capacity:</strong> ${room.capacity} guests</p>
+                    <div class="price">${money(room.price)}
+                        <small>/ night</small></div>
+
+                    <p>${availability > 0
+                        ? `${availability} room(s) available`
+                        : "No rooms available for selected dates"}</p>
+
+                    <button class="btn" type="button"
+                        ${availability <= 0 || !canFitGuests ? "disabled" : ""}
+                        onclick="startBooking(${room.id})">
+                        Book This Room
+                    </button>
+                </div>
+            </article>`;
+    }).join("");
+}
+
+function renderAdminRooms() {
+    document.getElementById("adminRoomTable").innerHTML =
+        rooms.map(room => `
+            <tr>
+                <td>${escapeHTML(room.name)}</td>
+                <td>
+                    <input aria-label="Price for ${escapeHTML(room.name)}"
+                        type="number" min="1" step="1"
+                        id="price-${room.id}" value="${room.price}">
+                </td>
+                <td>
+                    <input aria-label="Quantity for ${escapeHTML(room.name)}"
+                        type="number" min="0" step="1"
+                        id="quantity-${room.id}" value="${room.quantity}">
+                </td>
+                <td>
+                    <button class="btn btn-small"
+                        onclick="updateRoom(${room.id})">Save</button>
+                </td>
+            </tr>
+        `).join("");
+}
+
+function renderBookings() {
+    const ownBookings = currentUser
+        ? bookings.filter(booking => booking.userId === currentUser.id)
+        : [];
+
+    const tbody = document.getElementById("bookingTable");
+
+    if (!currentUser) {
+        tbody.innerHTML = `<tr><td colspan="8">
+            Log in to view your bookings.</td></tr>`;
+    } else if (ownBookings.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8">
+            No bookings yet. Explore our rooms to get started.</td></tr>`;
+    } else {
+        tbody.innerHTML = ownBookings.map(booking => {
+            const room = rooms.find(item => item.id === booking.roomId);
+            const eligible = booking.status === "Confirmed" &&
+                daysUntil(booking.checkin) >= 3;
+
+            return `
+                <tr>
+                    <td>${escapeHTML(booking.id)}</td>
+                    <td>${escapeHTML(room ? room.name : "Room")}</td>
+                    <td>${formatDate(booking.checkin)}</td>
+                    <td>${formatDate(booking.checkout)}</td>
+                    <td>${booking.guests}</td>
+                    <td>${money(booking.total)}</td>
+                    <td>${escapeHTML(booking.status)}</td>
+                    <td>
+                        ${eligible ? `
+                            <button class="btn btn-small"
+                                onclick="modifyBooking('${booking.id}')">
+                                Modify
+                            </button>
+                            <button class="btn btn-danger btn-small"
+                                onclick="cancelBooking('${booking.id}')">
+                                Cancel
+                            </button>
+                        ` : "—"}
+                    </td>
+                </tr>`;
+        }).join("");
+    }
+
+    renderAdminBookings();
+}
+
+function daysUntil(dateString) {
+    const start = new Date(todayString() + "T12:00:00");
+    const end = new Date(dateString + "T12:00:00");
+
+    return Math.floor((end - start) / 86400000);
+}
+
+function renderAdminBookings() {
+    const tbody = document.getElementById("adminBookingTable");
+
+    if (!bookings.length) {
+        tbody.innerHTML = `<tr><td colspan="6">No reservations.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = bookings.map(booking => {
+        const room = rooms.find(item => item.id === booking.roomId);
+        const user = users.find(item => item.id === booking.userId);
+
+        return `
+            <tr>
+                <td>${escapeHTML(booking.id)}</td>
+                <td>${escapeHTML(user ? user.name : "Unknown")}</td>
+                <td>${escapeHTML(room ? room.name : "Room")}</td>
+                <td>${formatDate(booking.checkin)} – ${formatDate(booking.checkout)}</td>
+                <td>${escapeHTML(booking.status)}</td>
+                <td>
+                    ${booking.status === "Confirmed" ? `
+                        <button class="btn btn-small"
+                            onclick="adminModifyBooking('${booking.id}')">
+                            Modify
+                        </button>
+                        <button class="btn btn-danger btn-small"
+                            onclick="adminCancelBooking('${booking.id}')">
+                            Cancel
+                        </button>
+                    ` : "—"}
+                </td>
+            </tr>`;
+    }).join("");
+}
+
+function renderProfile() {
+    const panel = document.getElementById("profilePanel");
+
+    if (!currentUser) {
+        panel.classList.add("hidden");
+        return;
+    }
+
+    panel.classList.remove("hidden");
+
+    document.getElementById("profileDetails").textContent =
+        `Name: ${currentUser.name} | Email: ${currentUser.email} | Phone: ${currentUser.phone}`;
+}
+
+function refresh() {
+    renderRooms(
+        document.getElementById("checkin").value,
+        document.getElementById("checkout").value,
+        document.getElementById("guests").value
+    );
+
+    renderAdminRooms();
+    renderBookings();
+    renderProfile();
+}
+
+function startBooking(roomId) {
+    if (!currentUser) {
+        showMessage("searchMessage",
+            "Please register or log in before booking.", true);
+        document.getElementById("account").scrollIntoView();
+        return;
+    }
+
+    const checkin = document.getElementById("checkin").value;
+    const checkout = document.getElementById("checkout").value;
+    const guests = Number(document.getElementById("guests").value);
+
+    if (!validDateRange(checkin, checkout)) {
+        showMessage("searchMessage",
+            "Choose a valid future check-in and check-out date.", true);
+        document.getElementById("searchForm").scrollIntoView();
+        return;
+    }
+
+    const room = rooms.find(item => item.id === roomId);
+
+    if (!room || room.capacity < guests ||
+        availableRooms(room, checkin, checkout) <= 0) {
+        showMessage("searchMessage",
+            "This room is not available for your selection.", true);
+        return;
+    }
+
+    const nights = nightsBetween(checkin, checkout);
+    const total = nights * room.price;
+
+    if (!confirm(
+        `Confirm ${room.name}?\n` +
+        `Check-in: ${checkin}\nCheck-out: ${checkout}\n` +
+        `Nights: ${nights}\nGuests: ${guests}\n` +
+        `Total: ${money(total)}\n\n` +
+        `This demo does not process real payments.`
+    )) return;
+
+    const booking = {
+        id: "ST" + Date.now().toString().slice(-8),
+        userId: currentUser.id,
+        roomId,
+        checkin,
+        checkout,
+        guests,
+        total,
+        status: "Confirmed",
+        createdAt: new Date().toISOString()
+    };
+
+    bookings.push(booking);
+    saveState();
+    refresh();
+
+    showMessage("bookingMessage",
+        `Booking ${booking.id} created in this browser demo. No payment was taken.`);
+    document.getElementById("bookings").scrollIntoView();
+}
+
+function modifyBooking(id) {
+    const booking = bookings.find(item =>
+        item.id === id && currentUser && item.userId === currentUser.id
+    );
+
+    if (!booking || booking.status !== "Confirmed") return;
+
+    if (daysUntil(booking.checkin) < 3) {
+        showMessage("bookingMessage",
+            "Bookings can only be changed at least 3 days before arrival.", true);
+        return;
+    }
+
+    const checkin = prompt("New check-in date (YYYY-MM-DD):", booking.checkin);
+    if (checkin === null) return;
+
+    const checkout = prompt("New check-out date (YYYY-MM-DD):", booking.checkout);
+    if (checkout === null) return;
+
+    if (!validDateRange(checkin, checkout) || daysUntil(checkin) < 3) {
+        showMessage("bookingMessage",
+            "Enter valid dates at least 3 days before the new arrival.", true);
+        return;
+    }
+
+    const room = rooms.find(item => item.id === booking.roomId);
+
+    if (!room || availableRooms(room, checkin, checkout, booking.id) <= 0) {
+        showMessage("bookingMessage",
+            "No room available for the revised dates.", true);
+        return;
+    }
+
+    booking.checkin = checkin;
+    booking.checkout = checkout;
+    booking.total = nightsBetween(checkin, checkout) * room.price;
+
+    saveState();
+    refresh();
+    showMessage("bookingMessage", "Booking dates updated in the demo.");
+}
+
+function cancelBooking(id) {
+    const booking = bookings.find(item =>
+        item.id === id && currentUser && item.userId === currentUser.id
+    );
+
+    if (!booking || booking.status !== "Confirmed") return;
+
+    if (daysUntil(booking.checkin) < 3) {
+        showMessage("bookingMessage",
+            "Cancellation is available only at least 3 days before arrival.", true);
+        return;
+    }
+
+    if (!confirm("Cancel booking " + booking.id + "?")) return;
+
+    booking.status = "Cancelled";
+    saveState();
+    refresh();
+
+    showMessage("bookingMessage",
+        "Booking cancelled in the demo. No payment refund was processed.");
+}
+
+// Search and check room availability.
+document.getElementById("searchForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const checkin = document.getElementById("checkin").value;
+    const checkout = document.getElementById("checkout").value;
+    const guests = Number(document.getElementById("guests").value);
+
+    if (!validDateRange(checkin, checkout)) {
+        showMessage("searchMessage",
+            "Choose a valid check-in date and a later check-out date.", true);
+        return;
+    }
+
+    const destination = document.getElementById("destination").value.trim();
+
+    renderRooms(checkin, checkout, guests);
+
+    showMessage("searchMessage",
+        `Showing room availability for ${destination || "all destinations"}, ` +
+        `${nightsBetween(checkin, checkout)} night(s), ${guests} guest(s). ` +
+        "Availability is based on the demo inventory.");
+
+    document.getElementById("rooms").scrollIntoView();
+});
+
+// Registration for this frontend-only demo.
+document.getElementById("registerForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const phone = document.getElementById("phone").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (users.some(user => user.email === email)) {
+        showMessage("registerMessage",
+            "An account with this email already exists.", true);
+        return;
+    }
+
+    // WARNING: passwords stored in browser storage are NOT secure.
+    // This must be replaced with server-side authentication in production.
+    const user = {
+        id: "U" + Date.now(),
+        name,
+        email,
+        phone,
+        password
+    };
+
+    users.push(user);
+    currentUser = user;
+    saveState();
+    refresh();
+
+    showMessage("registerMessage",
+        "Demo account created. Do not use real passwords on this prototype.");
+    document.getElementById("password").value = "";
+});
+
+// Demo login only; not secure authentication.
+document.getElementById("loginForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const email = document.getElementById("loginEmail")
+        .value.trim().toLowerCase();
+
+    const password = document.getElementById("loginPassword").value;
+
+    const user = users.find(item =>
+        item.email === email && item.password === password
+    );
+
+    if (!user) {
+        showMessage("loginMessage",
+            "Account not found or incorrect credentials in this browser demo.", true);
+        return;
+    }
+
+    currentUser = user;
+    refresh();
+
+    showMessage("loginMessage", "Logged in to the local demonstration.");
+});
+
+document.getElementById("logoutButton").addEventListener("click", () => {
+    currentUser = null;
+    refresh();
+    showMessage("loginMessage", "Logged out.");
+});
+
+document.getElementById("editProfileButton").addEventListener("click", () => {
+    if (!currentUser) return;
+
+    const name = prompt("Edit your name:", currentUser.name);
+    if (name === null || !name.trim()) return;
+
+    const phone = prompt("Edit your phone number:", currentUser.phone);
+    if (phone === null || !phone.trim()) return;
+
+    currentUser.name = name.trim();
+    currentUser.phone = phone.trim();
+
+    const storedUser = users.find(item => item.id === currentUser.id);
+    if (storedUser) {
+        storedUser.name = currentUser.name;
+        storedUser.phone = currentUser.phone;
+    }
+
+    saveState();
+    refresh();
+});
+
+// Submit a review in local demo storage.
+document.getElementById("reviewForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (!currentUser) {
+        showMessage("reviewMessage", "Please log in to submit a review.", true);
+        return;
+    }
+
+    const text = document.getElementById("reviewText").value.trim();
+    const rating = Number(document.getElementById("rating").value);
+
+    reviews.unshift({
+        name: currentUser.name,
+        text,
+        rating
+    });
+
+    saveState();
+    renderReviews();
+    event.target.reset();
+
+    showMessage("reviewMessage", "Review saved in this browser demo.");
+});
+
+function renderReviews() {
+    const list = document.getElementById("reviewList");
+
+    if (!reviews.length) return;
+
+    list.innerHTML = reviews.map(review => `
+        <div style="margin-bottom:18px">
+            <p>${"★".repeat(review.rating)}${"☆".repeat(5-review.rating)}</p>
+            <p>${escapeHTML(review.text)}</p>
+            <small>— ${escapeHTML(review.name)}</small>
+        </div>
+        <hr style="margin:15px 0;border:0;border-top:1px solid #eee">
+    `).join("");
+}
+
+// Admin inventory editor for the demonstration.
+function updateRoom(id) {
+    const room = rooms.find(item => item.id === id);
+    if (!room) return;
+
+    const price = Number(document.getElementById("price-" + id).value);
+    const quantity = Number(document.getElementById("quantity-" + id).value);
+
+    if (!Number.isInteger(price) || price < 1 ||
+        !Number.isInteger(quantity) || quantity < 0) {
+        showMessage("adminMessage",
+            "Price must be positive and quantity cannot be negative.", true);
+        return;
+    }
+
+    const occupied = bookings.filter(booking =>
+        booking.roomId === id && booking.status === "Confirmed"
+    ).length;
+
+    if (quantity < occupied) {
+        showMessage("adminMessage",
+            "Quantity cannot be lower than the number of confirmed reservations.", true);
+        return;
+    }
+
+    room.price = price;
+    room.quantity = quantity;
+
+    saveState();
+    refresh();
+
+    showMessage("adminMessage",
+        "Room inventory updated in the local demo.");
+}
+
+function adminModifyBooking(id) {
+    const booking = bookings.find(item => item.id === id);
+    if (!booking || booking.status !== "Confirmed") return;
+
+    const checkin = prompt("New check-in (YYYY-MM-DD):", booking.checkin);
+    if (checkin === null) return;
+
+    const checkout = prompt("New check-out (YYYY-MM-DD):", booking.checkout);
+    if (checkout === null) return;
+
+    const guestsText = prompt("Number of guests:", String(booking.guests));
+    if (guestsText === null) return;
+
+    const guests = Number(guestsText);
+    const room = rooms.find(item => item.id === booking.roomId);
+
+    if (!validDateRange(checkin, checkout) ||
+        !Number.isInteger(guests) || guests < 1 ||
+        !room || guests > room.capacity ||
+        availableRooms(room, checkin, checkout, booking.id) <= 0) {
+        alert("Invalid dates, guest count, or unavailable room.");
+        return;
+    }
+
+    booking.checkin = checkin;
+    booking.checkout = checkout;
+    booking.guests = guests;
+    booking.total = nightsBetween(checkin, checkout) * room.price;
+
+    saveState();
+    refresh();
+    showMessage("adminMessage", "Reservation updated in the local demo.");
+}
+
+function adminCancelBooking(id) {
+    const booking = bookings.find(item => item.id === id);
+    if (!booking || booking.status !== "Confirmed") return;
+
+    if (!confirm("Administrator: cancel booking " + id + "?")) return;
+
+    booking.status = "Cancelled";
+    saveState();
+    refresh();
+    showMessage("adminMessage", "Reservation cancelled in the local demo.");
+}
+
+// Contact form demonstration. It does not send an email.
+document.getElementById("contactForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    showMessage("contactResult",
+        "Form validated successfully. Connect a backend/email service to deliver it.");
+
+    event.target.reset();
+});
+
+// Initialise dates and the interface.
+loadState();
+
+const checkinInput = document.getElementById("checkin");
+const checkoutInput = document.getElementById("checkout");
+
+checkinInput.min = todayString();
+checkinInput.value = addDays(todayString(), 1);
+
+checkoutInput.min = addDays(checkinInput.value, 1);
+checkoutInput.value = addDays(checkinInput.value, 2);
+
+checkinInput.addEventListener("change", () => {
+    checkoutInput.min = addDays(checkinInput.value, 1);
+
+    if (checkoutInput.value <= checkinInput.value) {
+        checkoutInput.value = addDays(checkinInput.value, 1);
+    }
+});
+
+loadState();
+refresh();
+renderReviews();
+</script>
+
+</body>
+</html>
+```
