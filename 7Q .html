@@ -1,0 +1,1112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ÉLAN | Beauty & Salon Booking</title>
+
+<style>
+:root {
+  --primary: #a45d69;
+  --dark: #292322;
+  --cream: #faf6f2;
+  --pink: #f2e2e1;
+  --white: #ffffff;
+  --muted: #817775;
+  --border: #eadfda;
+  --green: #477b5b;
+  --shadow: 0 12px 35px rgba(52, 35, 31, .07);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--dark);
+  background: var(--cream);
+  line-height: 1.6;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible,
+select:focus-visible, a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+header {
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.nav {
+  max-width: 1200px;
+  margin: auto;
+  padding: 15px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.logo {
+  font-family: Georgia, serif;
+  font-size: 27px;
+  letter-spacing: 3px;
+  color: var(--primary);
+  font-weight: bold;
+}
+.logo small {
+  display: block;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-align: center;
+  color: var(--muted);
+}
+nav { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+nav a { color: var(--dark); text-decoration: none; font-size: 14px; }
+nav a:hover { color: var(--primary); }
+.btn {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: white;
+  padding: 11px 19px;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: .2s;
+}
+.btn:hover { background: #864955; }
+.btn-outline { background: white; color: var(--primary); }
+.btn-outline:hover { background: var(--pink); color: var(--dark); }
+.btn-small { padding: 7px 11px; font-size: 12px; }
+.hero {
+  max-width: 1200px;
+  margin: auto;
+  padding: 65px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+.eyebrow {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+h1, h2, h3 { line-height: 1.2; }
+h1, h2 { font-family: Georgia, serif; font-weight: 500; }
+h1 { font-size: clamp(40px, 5vw, 67px); margin: 18px 0; }
+h1 em { color: var(--primary); }
+.hero p { color: var(--muted); max-width: 470px; margin-bottom: 25px; }
+.hero-image {
+  min-height: 390px;
+  border-radius: 48% 48% 8px 8px;
+  background:
+    linear-gradient(180deg, rgba(35,20,18,.02), rgba(35,20,18,.16)),
+    url("https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=85")
+    center/cover;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.image-note {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: rgba(255,255,255,.95);
+  padding: 15px;
+  border-radius: 6px;
+}
+.image-note strong { display: block; font-family: Georgia, serif; font-size: 20px; }
+.image-note span { color: var(--muted); font-size: 13px; }
+section { scroll-margin-top: 90px; }
+.section { padding: 65px 24px; }
+.section-white { background: white; }
+.container { max-width: 1150px; margin: auto; }
+.section-heading { text-align: center; margin-bottom: 35px; }
+.section-heading h2 { font-size: 38px; margin: 10px 0; }
+.section-heading p { color: var(--muted); }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.card-body { padding: 20px; }
+.card h3 { font-family: Georgia, serif; font-size: 23px; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 14px; }
+.service-img { height: 180px; background-size: cover; background-position: center; }
+.service-price {
+  display: flex; justify-content: space-between; align-items: center;
+  margin: 17px 0;
+}
+.price { color: var(--primary); font-weight: 700; font-size: 19px; }
+.duration { font-size: 12px; color: var(--muted); }
+.stylist-avatar {
+  height: 145px; display: grid; place-items: center;
+  background: var(--pink); font-size: 58px;
+}
+.stylist-info { padding: 18px; }
+.stylist-info p { color: var(--muted); font-size: 13px; }
+.tag {
+  display: inline-block;
+  background: #f5e9e6;
+  color: #8b4e57;
+  padding: 4px 9px;
+  font-size: 11px;
+  border-radius: 20px;
+  margin-top: 9px;
+}
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1.25fr .75fr;
+  gap: 25px;
+  align-items: start;
+}
+.panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 26px;
+  box-shadow: var(--shadow);
+}
+.panel h3 { font-family: Georgia, serif; font-size: 25px; margin-bottom: 20px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field.full { grid-column: 1 / -1; }
+label { font-size: 13px; font-weight: 600; }
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--dark);
+}
+textarea { resize: vertical; }
+.help { color: var(--muted); font-size: 12px; }
+.summary-line {
+  display: flex; justify-content: space-between; gap: 15px;
+  border-bottom: 1px solid var(--border); padding: 13px 0;
+  font-size: 14px;
+}
+.summary-line span:last-child { font-weight: 600; text-align: right; }
+.total { font-size: 20px; color: var(--primary); font-weight: 700; }
+.status {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #e6f2e8;
+  color: var(--green);
+}
+.status.cancelled { background: #f9e5e3; color: #a43f3a; }
+.status.pending { background: #fff0d7; color: #956c20; }
+.dashboard-top {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
+  margin-bottom: 25px;
+}
+.stat {
+  background: white; padding: 22px; border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.stat span { font-size: 13px; color: var(--muted); }
+.stat strong { display: block; font-size: 30px; margin-top: 6px; }
+.tabs { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 22px; }
+.tab {
+  border: 1px solid var(--border); background: white; color: var(--dark);
+  padding: 9px 15px; border-radius: 5px;
+}
+.tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+.table-wrap { overflow-x: auto; background: white; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; min-width: 720px; }
+th, td { text-align: left; padding: 15px; border-bottom: 1px solid var(--border); font-size: 13px; }
+th { background: #f7efeb; color: #65524e; }
+.empty { padding: 30px; text-align: center; color: var(--muted); }
+.calendar {
+  display: grid; grid-template-columns: repeat(7,1fr); gap: 7px;
+  margin-top: 15px;
+}
+.calendar div { text-align: center; padding: 9px 2px; border-radius: 4px; font-size: 13px; }
+.calendar .day { background: #f8efeb; }
+.calendar .booked { background: #e8d1d0; color: #814550; font-weight: bold; }
+.calendar .today { outline: 2px solid var(--primary); }
+.calendar .weekday { font-weight: bold; color: var(--muted); }
+.review { padding: 22px; background: white; border: 1px solid var(--border); border-radius: 8px; }
+.review .stars { color: #bd8b39; margin-bottom: 8px; }
+.review p { font-size: 14px; color: var(--muted); }
+.review strong { display: block; margin-top: 12px; }
+footer { background: #2d2524; color: white; padding: 40px 24px; }
+.footer-inner {
+  max-width: 1150px; margin: auto; display: flex;
+  justify-content: space-between; gap: 25px; flex-wrap: wrap;
+}
+footer p { color: #d3c4c0; font-size: 13px; margin-top: 8px; }
+.hidden { display: none !important; }
+.notice { padding: 13px; border-radius: 5px; background: #edf5ee; color: #326642; font-size: 13px; margin-bottom: 18px; }
+.danger { background: #a43f3a; border-color: #a43f3a; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 20px 0; }
+
+@media(max-width:800px) {
+  .hero { grid-template-columns: 1fr; gap: 30px; padding-top: 42px; }
+  .hero-image { min-height: 330px; }
+  .grid { grid-template-columns: repeat(2,1fr); }
+  .booking-layout { grid-template-columns: 1fr; }
+  .dashboard-top { grid-template-columns: 1fr; }
+  nav { gap: 12px; }
+}
+@media(max-width:560px) {
+  .nav { align-items: flex-start; flex-direction: column; }
+  nav { gap: 13px; }
+  nav a { font-size: 12px; }
+  .grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  .section { padding: 45px 16px; }
+  .panel { padding: 18px; }
+  .section-heading h2 { font-size: 31px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="nav">
+    <a href="#home" class="logo" style="text-decoration:none">
+      ÉLAN <small>BEAUTY STUDIO</small>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#stylists">Stylists</a>
+      <a href="#booking">Book Appointment</a>
+      <a href="#dashboard">My Bookings</a>
+      <a href="#manager">Manager</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div>
+    <span class="eyebrow">Beauty • Wellness • Confidence</span>
+    <h1>Your beauty.<br>Your moment.<br><em>Your way.</em></h1>
+    <p>
+      Discover your perfect beauty experience. Explore professional
+      treatments, meet our expert stylists and reserve your preferred
+      appointment in just a few clicks.
+    </p>
+    <a href="#booking"><button class="btn">Book an Appointment →</button></a>
+    <a href="#services"><button class="btn btn-outline">Explore Services</button></a>
+    <p style="margin-top:22px;font-size:12px">
+      ✦ Expert stylists &nbsp; ✦ Flexible appointments &nbsp; ✦ Secure booking
+    </p>
+  </div>
+  <div class="hero-image" role="img" aria-label="Professional beauty salon interior">
+    <div class="image-note">
+      <strong>Feel beautiful. Feel confident.</strong>
+      <span>A personalised experience, made just for you.</span>
+    </div>
+  </div>
+</section>
+
+<section class="section section-white" id="services">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">Our Expertise</span>
+      <h2>Services designed around you</h2>
+      <p>Professional care, premium products and attention to every detail.</p>
+    </div>
+    <div class="grid" id="serviceCards"></div>
+  </div>
+</section>
+
+<section class="section" id="stylists">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">Meet Our Team</span>
+      <h2>Your beauty experts</h2>
+      <p>Choose a professional who understands your personal style.</p>
+    </div>
+    <div class="grid" id="stylistCards"></div>
+  </div>
+</section>
+
+<section class="section section-white" id="booking">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">Reservations</span>
+      <h2>Reserve your appointment</h2>
+      <p>Choose a service, stylist, date and available time.</p>
+    </div>
+
+    <div class="booking-layout">
+      <div class="panel">
+        <h3>Appointment details</h3>
+        <div id="bookingNotice" class="notice hidden"></div>
+        <form id="bookingForm">
+          <div class="form-grid">
+            <div class="field full">
+              <label for="customerName">Full name *</label>
+              <input id="customerName" required maxlength="80" placeholder="Enter your full name">
+            </div>
+            <div class="field">
+              <label for="customerEmail">Email address *</label>
+              <input id="customerEmail" type="email" required maxlength="120" placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="customerPhone">Phone number *</label>
+              <input id="customerPhone" type="tel" required maxlength="20" placeholder="+91 98765 43210">
+            </div>
+            <div class="field full">
+              <label for="serviceSelect">Select service *</label>
+              <select id="serviceSelect" required></select>
+            </div>
+            <div class="field">
+              <label for="stylistSelect">Preferred stylist *</label>
+              <select id="stylistSelect" required></select>
+            </div>
+            <div class="field">
+              <label for="bookingDate">Appointment date *</label>
+              <input id="bookingDate" type="date" required>
+            </div>
+            <div class="field full">
+              <label for="bookingTime">Available time slot *</label>
+              <select id="bookingTime" required>
+                <option value="">Select a date first</option>
+              </select>
+              <span class="help">Unavailable slots are automatically locked for the selected stylist.</span>
+            </div>
+            <div class="field">
+              <label for="paymentPlan">Payment plan *</label>
+              <select id="paymentPlan">
+                <option value="full">Pay in full</option>
+                <option value="deposit">Pay 30% deposit</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="paymentMethod">Payment method *</label>
+              <select id="paymentMethod">
+                <option value="Pay at salon">Pay at salon</option>
+                <option value="Stripe">Stripe</option>
+                <option value="PayPal">PayPal</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="customerNotes">Special requests (optional)</label>
+              <textarea id="customerNotes" rows="3" maxlength="500" placeholder="Tell us about your preferences..."></textarea>
+            </div>
+            <div class="field full">
+              <button class="btn" type="submit">Confirm Reservation →</button>
+              <p class="help">Demo checkout only. Online payment is not processed by this page.</p>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <aside>
+        <div class="panel">
+          <h3>Your booking summary</h3>
+          <div class="summary-line"><span>Service</span><span id="sumService">Select a service</span></div>
+          <div class="summary-line"><span>Stylist</span><span id="sumStylist">Select a stylist</span></div>
+          <div class="summary-line"><span>Date</span><span id="sumDate">—</span></div>
+          <div class="summary-line"><span>Time</span><span id="sumTime">—</span></div>
+          <div class="summary-line"><span>Duration</span><span id="sumDuration">—</span></div>
+          <div class="summary-line"><span>Total price</span><span id="sumTotal" class="total">₹0</span></div>
+          <div class="summary-line"><span>Pay now</span><span id="sumPay">₹0</span></div>
+          <div class="summary-line"><span>Remaining</span><span id="sumRemaining">₹0</span></div>
+          <p class="help" style="margin-top:18px">
+            Your reservation is saved in this browser. Real payment confirmation
+            requires a secure payment integration.
+          </p>
+        </div>
+
+        <div class="panel" style="margin-top:20px">
+          <h3>Availability calendar</h3>
+          <p class="help">Choose a date to see reservation activity.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:15px">
+            <button class="tab" id="prevMonth" type="button" aria-label="Previous month">←</button>
+            <strong id="calendarTitle"></strong>
+            <button class="tab" id="nextMonth" type="button" aria-label="Next month">→</button>
+          </div>
+          <div class="calendar" id="calendarGrid"></div>
+          <p class="help" style="margin-top:14px">Outlined = today · Pink = has reservations</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="dashboard">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">Customer Portal</span>
+      <h2>Your personal dashboard</h2>
+      <p>View your appointments, manage bookings and share feedback.</p>
+    </div>
+    <div class="panel" style="margin-bottom:22px">
+      <form id="accountForm" class="form-grid">
+        <div class="field">
+          <label for="accountEmail">Find bookings using your email</label>
+          <input id="accountEmail" type="email" required placeholder="Enter your booking email">
+        </div>
+        <div class="field" style="justify-content:end">
+          <button class="btn" type="submit">View My Appointments</button>
+        </div>
+      </form>
+      <p class="help" style="margin-top:10px">Demo account lookup; a production website needs authenticated customer accounts.</p>
+    </div>
+    <div id="customerDashboard">
+      <div class="empty">Enter your email above to view your appointments.</div>
+    </div>
+    <div class="panel" style="margin-top:22px">
+      <h3>Share your experience</h3>
+      <form id="feedbackForm" class="form-grid">
+        <div class="field">
+          <label for="reviewName">Your name *</label>
+          <input id="reviewName" required maxlength="80">
+        </div>
+        <div class="field">
+          <label for="reviewRating">Rating *</label>
+          <select id="reviewRating" required>
+            <option value="5">★★★★★ Excellent</option>
+            <option value="4">★★★★☆ Very good</option>
+            <option value="3">★★★☆☆ Good</option>
+            <option value="2">★★☆☆☆ Fair</option>
+            <option value="1">★☆☆☆☆ Poor</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="reviewText">Your feedback *</label>
+          <textarea id="reviewText" required maxlength="600" rows="3" placeholder="Tell us about your experience..."></textarea>
+        </div>
+        <div class="field full">
+          <button class="btn" type="submit">Submit Feedback</button>
+        </div>
+      </form>
+      <p id="feedbackMessage" class="help" style="margin-top:10px" aria-live="polite"></p>
+    </div>
+    <div class="grid" id="reviews" style="margin-top:22px"></div>
+  </div>
+</section>
+
+<section class="section section-white" id="manager">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">Administration</span>
+      <h2>Salon management panel</h2>
+      <p>Monitor reservations and manage service availability.</p>
+    </div>
+
+    <div class="panel" style="margin-bottom:22px">
+      <h3>Manager access</h3>
+      <p class="help" style="margin-bottom:12px">
+        This is a demonstration panel, not a secure administrator login.
+      </p>
+      <form id="managerForm" class="form-grid">
+        <div class="field">
+          <label for="managerCode">Demo access code</label>
+          <input id="managerCode" type="password" required placeholder="Enter demo code">
+        </div>
+        <div class="field" style="justify-content:end">
+          <button class="btn" type="submit">Open Manager Dashboard</button>
+        </div>
+      </form>
+      <p id="managerMessage" class="help" style="margin-top:10px" aria-live="polite"></p>
+    </div>
+
+    <div id="managerDashboard" class="hidden">
+      <div class="dashboard-top">
+        <div class="stat"><span>Total reservations</span><strong id="statTotal">0</strong></div>
+        <div class="stat"><span>Upcoming bookings</span><strong id="statUpcoming">0</strong></div>
+        <div class="stat"><span>Expected service value</span><strong id="statRevenue">₹0</strong></div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-filter="all">All bookings</button>
+        <button class="tab" data-filter="upcoming">Upcoming</button>
+        <button class="tab" data-filter="cancelled">Cancelled</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Customer</th><th>Service</th><th>Stylist</th>
+              <th>Date & Time</th><th>Payment</th><th>Status</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="managerTable"></tbody>
+        </table>
+      </div>
+
+      <div class="panel" style="margin-top:25px">
+        <h3>Manage services</h3>
+        <form id="addServiceForm" class="form-grid">
+          <div class="field">
+            <label for="newServiceName">Service name</label>
+            <input id="newServiceName" required maxlength="80">
+          </div>
+          <div class="field">
+            <label for="newServicePrice">Price (₹)</label>
+            <input id="newServicePrice" type="number" min="1" max="100000" required>
+          </div>
+          <div class="field">
+            <label for="newServiceDuration">Duration (minutes)</label>
+            <input id="newServiceDuration" type="number" min="15" max="480" step="15" value="30" required>
+          </div>
+          <div class="field" style="justify-content:end">
+            <button class="btn" type="submit">Add Service</button>
+          </div>
+        </form>
+        <div class="table-wrap" style="margin-top:20px">
+          <table>
+            <thead><tr><th>Service</th><th>Price</th><th>Duration</th><th>Action</th></tr></thead>
+            <tbody id="serviceAdminTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:25px">
+        <h3>Block unavailable hours</h3>
+        <form id="blockForm" class="form-grid">
+          <div class="field">
+            <label for="blockStylist">Stylist</label>
+            <select id="blockStylist" required></select>
+          </div>
+          <div class="field">
+            <label for="blockDate">Date</label>
+            <input id="blockDate" type="date" required>
+          </div>
+          <div class="field">
+            <label for="blockTime">Time slot</label>
+            <select id="blockTime" required></select>
+          </div>
+          <div class="field" style="justify-content:end">
+            <button class="btn" type="submit">Block Time Slot</button>
+          </div>
+        </form>
+        <div id="blockedList" style="margin-top:18px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo" style="color:#f2d9d5">ÉLAN</div>
+      <p>Your destination for beauty, confidence and self-care.</p>
+    </div>
+    <div>
+      <strong>Quick links</strong>
+      <p><a href="#services" style="color:white">Our services</a></p>
+      <p><a href="#booking" style="color:white">Book an appointment</a></p>
+      <p><a href="#dashboard" style="color:white">Customer dashboard</a></p>
+    </div>
+    <div>
+      <strong>Contact</strong>
+      <p>Email: hello@example.com</p>
+      <p>Phone: +91 98765 43210</p>
+      <p>© <span id="year"></span> ÉLAN Beauty Studio</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+const money = amount => "₹" + Number(amount).toLocaleString("en-IN");
+const today = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+};
+const escapeHTML = value => String(value).replace(/[&<>"']/g, ch => ({
+  "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+}[ch]));
+
+const stylists = [
+  {id:"s1", name:"Ananya Sharma", specialty:"Hair Styling Expert", icon:"✂️"},
+  {id:"s2", name:"Meera Kapoor", specialty:"Skin & Beauty Specialist", icon:"🌸"},
+  {id:"s3", name:"Riya Verma", specialty:"Makeup Artist", icon:"💄"}
+];
+
+const defaultServices = [
+  {id:"v1",name:"Signature Haircut",price:500,duration:45,desc:"A personalised haircut and styling experience.",image:"photo-1562322140-8baeececf3df"},
+  {id:"v2",name:"Facial & Glow",price:1200,duration:60,desc:"Refresh your skin with a relaxing facial.",image:"photo-1570172619644-dfd03ed5d881"},
+  {id:"v3",name:"Luxury Manicure",price:700,duration:45,desc:"Carefully detailed nail care and finishing.",image:"photo-1604654894610-df63bc536371"},
+  {id:"v4",name:"Bridal Makeup",price:5000,duration:120,desc:"A memorable look for your special day.",image:"photo-1522335789203-aabd1fc54bc9"},
+  {id:"v5",name:"Hair Spa",price:1500,duration:60,desc:"Nourishing care for softer, healthier-looking hair.",image:"photo-1527799820374-dcf8d9d4a388"},
+  {id:"v6",name:"Party Makeup",price:2500,duration:75,desc:"A polished makeup look for every occasion.",image:"photo-1487412720507-e7ab37603c6f"}
+];
+
+function load(key, fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+let services = load("elan_services", defaultServices);
+let bookings = load("elan_bookings", []);
+let blocked = load("elan_blocked", []);
+let reviews = load("elan_reviews", []);
+let currentFilter = "all";
+let calendarMonth = new Date();
+let managerUnlocked = false;
+
+function save() {
+  try {
+    localStorage.setItem("elan_services", JSON.stringify(services));
+    localStorage.setItem("elan_bookings", JSON.stringify(bookings));
+    localStorage.setItem("elan_blocked", JSON.stringify(blocked));
+    localStorage.setItem("elan_reviews", JSON.stringify(reviews));
+  } catch {
+    alert("Browser storage is unavailable or full. Changes may not persist.");
+  }
+}
+
+function serviceById(id) {
+  return services.find(s => s.id === id);
+}
+function stylistById(id) {
+  return stylists.find(s => s.id === id);
+}
+function getSlotTimes() {
+  return ["09:00","09:30","10:00","10:30","11:00","11:30",
+    "12:00","12:30","13:00","13:30","14:00","14:30",
+    "15:00","15:30","16:00","16:30","17:00","17:30",
+    "18:00","18:30","19:00"];
+}
+function timeLabel(time) {
+  const [h,m] = time.split(":").map(Number);
+  const suffix = h >= 12 ? "PM" : "AM";
+  return `${h%12 || 12}:${String(m).padStart(2,"0")} ${suffix}`;
+}
+function isPast(date,time) {
+  return date < today() || (date === today() && time <=
+    `${String(new Date().getHours()).padStart(2,"0")}:${String(new Date().getMinutes()).padStart(2,"0")}`);
+}
+function slotAvailable(stylistId,date,time,excludeId=null) {
+  if (isPast(date,time)) return false;
+  if (blocked.some(b => b.stylistId === stylistId && b.date === date && b.time === time)) return false;
+
+  const selectedService = serviceById($("serviceSelect").value);
+  const duration = selectedService ? selectedService.duration : 30;
+  const start = Number(time.slice(0,2))*60 + Number(time.slice(3,5));
+  const end = start + duration;
+
+  // Prevent overlapping appointments, including longer services.
+  return !bookings.some(b => {
+    if (b.id === excludeId || b.status === "Cancelled" ||
+        b.stylistId !== stylistId || b.date !== date) return false;
+    const bStart = Number(b.time.slice(0,2))*60 + Number(b.time.slice(3,5));
+    const bService = serviceById(b.serviceId);
+    const bEnd = bStart + (bService ? bService.duration : 30);
+    return start < bEnd && bStart < end;
+  });
+}
+
+function renderServices() {
+  $("serviceCards").innerHTML = services.map(s => `
+    <article class="card">
+      <div class="service-img" style="background-image:url('https://images.unsplash.com/${encodeURIComponent(s.image)}?auto=format&fit=crop&w=700&q=80')"></div>
+      <div class="card-body">
+        <h3>${escapeHTML(s.name)}</h3>
+        <p>${escapeHTML(s.desc || "A personalised professional beauty experience.")}</p>
+        <div class="service-price">
+          <span class="price">${money(s.price)}</span>
+          <span class="duration">${s.duration} minutes</span>
+        </div>
+        <button class="btn" onclick="chooseService('${s.id}')">Book Service</button>
+      </div>
+    </article>
+  `).join("");
+
+  const old = $("serviceSelect").value;
+  $("serviceSelect").innerHTML = '<option value="">Choose a service</option>' +
+    services.map(s => `<option value="${s.id}">${escapeHTML(s.name)} — ${money(s.price)}</option>`).join("");
+  if (serviceById(old)) $("serviceSelect").value = old;
+
+  $("serviceAdminTable").innerHTML = services.map(s => `
+    <tr>
+      <td>${escapeHTML(s.name)}</td><td>${money(s.price)}</td><td>${s.duration} min</td>
+      <td><button class="btn btn-small danger" onclick="removeService('${s.id}')">Remove</button></td>
+    </tr>`).join("") || '<tr><td colspan="4">No services available.</td></tr>';
+}
+function renderStylists() {
+  $("stylistCards").innerHTML = stylists.map(s => `
+    <article class="card">
+      <div class="stylist-avatar">${s.icon}</div>
+      <div class="stylist-info">
+        <h3>${escapeHTML(s.name)}</h3>
+        <p>${escapeHTML(s.specialty)}</p>
+        <span class="tag">Professional stylist</span>
+        <div style="margin-top:15px">
+          <button class="btn btn-outline" onclick="chooseStylist('${s.id}')">Choose Stylist</button>
+        </div>
+      </div>
+    </article>`).join("");
+
+  $("stylistSelect").innerHTML = '<option value="">Choose a stylist</option>' +
+    stylists.map(s => `<option value="${s.id}">${escapeHTML(s.name)}</option>`).join("");
+  $("blockStylist").innerHTML = stylists.map(s =>
+    `<option value="${s.id}">${escapeHTML(s.name)}</option>`).join("");
+}
+function chooseService(id) {
+  $("serviceSelect").value = id;
+  updateSlots(); updateSummary();
+  $("booking").scrollIntoView({behavior:"smooth"});
+}
+function chooseStylist(id) {
+  $("stylistSelect").value = id;
+  updateSlots(); updateSummary();
+  $("booking").scrollIntoView({behavior:"smooth"});
+}
+
+function updateSlots() {
+  const stylistId = $("stylistSelect").value;
+  const date = $("bookingDate").value;
+  const old = $("bookingTime").value;
+
+  if (!stylistId || !date) {
+    $("bookingTime").innerHTML = '<option value="">Choose stylist and date first</option>';
+    updateSummary();
+    return;
+  }
+  const available = getSlotTimes().filter(t => slotAvailable(stylistId,date,t));
+  $("bookingTime").innerHTML = '<option value="">Choose available time</option>' +
+    available.map(t => `<option value="${t}">${timeLabel(t)}</option>`).join("");
+  if (available.includes(old)) $("bookingTime").value = old;
+  if (!available.length) $("bookingTime").innerHTML = '<option value="">No available slots</option>';
+  updateSummary();
+}
+function updateSummary() {
+  const s = serviceById($("serviceSelect").value);
+  const stylist = stylistById($("stylistSelect").value);
+  const date = $("bookingDate").value;
+  const time = $("bookingTime").value;
+  const total = s ? s.price : 0;
+  const deposit = $("paymentPlan").value === "deposit" ? Math.ceil(total*.30) : total;
+  $("sumService").textContent = s ? s.name : "Select a service";
+  $("sumStylist").textContent = stylist ? stylist.name : "Select a stylist";
+  $("sumDate").textContent = date || "—";
+  $("sumTime").textContent = time ? timeLabel(time) : "—";
+  $("sumDuration").textContent = s ? `${s.duration} minutes` : "—";
+  $("sumTotal").textContent = money(total);
+  $("sumPay").textContent = money(deposit);
+  $("sumRemaining").textContent = money(total-deposit);
+}
+
+function renderCalendar() {
+  const year = calendarMonth.getFullYear();
+  const month = calendarMonth.getMonth();
+  $("calendarTitle").textContent = calendarMonth.toLocaleDateString("en-IN",{month:"long",year:"numeric"});
+  const first = new Date(year,month,1).getDay();
+  const days = new Date(year,month+1,0).getDate();
+  let html = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+    .map(d => `<div class="weekday">${d}</div>`).join("");
+  for(let i=0;i<first;i++) html += "<div></div>";
+  for(let d=1;d<=days;d++) {
+    const date = `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const has = bookings.some(b => b.date === date && b.status !== "Cancelled");
+    html += `<div class="day ${has?"booked":""} ${date===today()?"today":""}"
+      role="button" tabindex="0" data-date="${date}" title="${has?"Reservations exist":"Select date"}">${d}</div>`;
+  }
+  $("calendarGrid").innerHTML = html;
+  $("calendarGrid").querySelectorAll("[data-date]").forEach(el => {
+    el.addEventListener("click", () => {
+      $("bookingDate").value = el.dataset.date;
+      updateSlots();
+      $("booking").scrollIntoView({behavior:"smooth"});
+    });
+    el.addEventListener("keydown", e => {
+      if(e.key === "Enter" || e.key === " ") el.click();
+    });
+  });
+}
+
+function renderCustomer(email) {
+  const list = bookings.filter(b => b.email.toLowerCase() === email.toLowerCase())
+    .sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+  const upcoming = list.filter(b => b.status !== "Cancelled" && !isPast(b.date,b.time));
+  const history = list.filter(b => b.status === "Cancelled" || isPast(b.date,b.time));
+
+  function bookingRows(items) {
+    if (!items.length) return '<div class="empty">No appointments in this category.</div>';
+    return `<div class="table-wrap"><table><thead><tr>
+      <th>Service</th><th>Stylist</th><th>Date</th><th>Time</th><th>Amount</th><th>Status</th><th>Action</th>
+      </tr></thead><tbody>${items.map(b => `
+      <tr>
+        <td>${escapeHTML(b.serviceName)}</td>
+        <td>${escapeHTML(b.stylistName)}</td>
+        <td>${escapeHTML(b.date)}</td><td>${timeLabel(b.time)}</td>
+        <td>${money(b.price)}</td>
+        <td><span class="status ${b.status==="Cancelled"?"cancelled":b.paymentStatus!=="Paid"?"pending":""}">${escapeHTML(b.status)}</span></td>
+        <td>${b.status==="Confirmed" && !isPast(b.date,b.time) ? `
+          <button class="btn btn-small btn-outline" onclick="rescheduleBooking('${b.id}')">Reschedule</button>
+          <button class="btn btn-small danger" onclick="cancelBooking('${b.id}')">Cancel</button>
+          ${b.paymentStatus!=="Paid" && b.paymentMethod!=="Pay at salon" ? '<div class="help">Payment pending</div>' : ''}
+          ` : "—"}</td>
+      </tr>`).join("")}</tbody></table></div>`;
+  }
+
+  $("customerDashboard").innerHTML = `
+    <div class="dashboard-top">
+      <div class="stat"><span>All reservations</span><strong>${list.length}</strong></div>
+      <div class="stat"><span>Upcoming</span><strong>${upcoming.length}</strong></div>
+      <div class="stat"><span>History / cancelled</span><strong>${history.length}</strong></div>
+    </div>
+    <h3 style="font-family:Georgia,serif;margin:20px 0 12px">Upcoming reservations</h3>
+    ${bookingRows(upcoming)}
+    <h3 style="font-family:Georgia,serif;margin:28px 0 12px">Reservation history</h3>
+    ${bookingRows(history)}
+    <div class="panel" style="margin-top:20px">
+      <h3>Personal details</h3>
+      <p>${escapeHTML(list[0]?.name || "No name available")}</p>
+      <p>${escapeHTML(email)}</p>
+      <p>${escapeHTML(list[0]?.phone || "No phone available")}</p>
+    </div>`;
+}
+function cancelBooking(id) {
+  const b = bookings.find(x => x.id === id);
+  if(!b || b.status !== "Confirmed") return;
+  if(!confirm("Cancel this reservation? Any payment refund must be handled by the payment provider.")) return;
+  b.status = "Cancelled";
+  save(); refreshAll(); renderCustomer($("accountEmail").value);
+}
+function rescheduleBooking(id) {
+  const b = bookings.find(x => x.id === id);
+  if(!b || b.status !== "Confirmed") return;
+  const date = prompt("Enter a new date (YYYY-MM-DD):",b.date);
+  if(!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+  const parsed = new Date(date+"T12:00:00");
+  if(Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0,10)!==date || date<today()) {
+    alert("Please enter a valid date that is today or later."); return;
+  }
+  const time = prompt("Enter a new time (24-hour HH:MM):",b.time);
+  if(!time || !getSlotTimes().includes(time)) {
+    alert("Choose a valid salon time slot."); return;
+  }
+  const oldDate = b.date, oldTime = b.time;
+  b.date = date; b.time = time;
+  if(!slotAvailable(b.stylistId,date,time,b.id)) {
+    b.date = oldDate; b.time = oldTime;
+    alert("That time is unavailable for this stylist. Please choose another slot.");
+    return;
+  }
+  save(); refreshAll(); renderCustomer($("accountEmail").value);
+  alert("Reservation rescheduled in the demo.");
+}
+function renderManager() {
+  if(!managerUnlocked) return;
+  const active = bookings.filter(b => b.status !== "Cancelled");
+  $("statTotal").textContent = bookings.length;
+  $("statUpcoming").textContent = active.filter(b => !isPast(b.date,b.time)).length;
+  $("statRevenue").textContent = money(active.reduce((sum,b)=>sum+b.price,0));
+
+  let list = bookings.slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  if(currentFilter==="upcoming") list=list.filter(b=>b.status!=="Cancelled"&&!isPast(b.date,b.time));
+  if(currentFilter==="cancelled") list=list.filter(b=>b.status==="Cancelled");
+
+  $("managerTable").innerHTML = list.map(b=>`
+    <tr>
+      <td>${escapeHTML(b.name)}<br><span class="help">${escapeHTML(b.email)}</span></td>
+      <td>${escapeHTML(b.serviceName)}</td><td>${escapeHTML(b.stylistName)}</td>
+      <td>${escapeHTML(b.date)}<br>${timeLabel(b.time)}</td>
+      <td>${money(b.price)}<br><span class="help">${escapeHTML(b.paymentMethod)} · ${escapeHTML(b.paymentStatus)}</span></td>
+      <td><span class="status ${b.status==="Cancelled"?"cancelled":b.paymentStatus!=="Paid"?"pending":""}">${escapeHTML(b.status)}</span></td>
+      <td>${b.status!=="Cancelled" ? `
+        <button class="btn btn-small btn-outline" onclick="managerReschedule('${b.id}')">Edit</button>
+        <button class="btn btn-small danger" onclick="cancelBooking('${b.id}')">Cancel</button>
+        <a href="tel:${encodeURIComponent(b.phone)}" class="btn btn-small btn-outline">Call</a>
+        ` : "—"}</td>
+    </tr>`).join("") || '<tr><td colspan="7">No reservations found.</td></tr>';
+
+  $("blockedList").innerHTML = blocked.length ? blocked.map((b,i)=>`
+    <div class="summary-line">
+      <span>${escapeHTML(stylistById(b.stylistId)?.name || "Stylist")} · ${escapeHTML(b.date)} · ${timeLabel(b.time)}</span>
+      <button class="btn btn-small danger" onclick="unblockTime(${i})">Unblock</button>
+    </div>`).join("") : '<p class="help">No blocked slots.</p>';
+}
+function managerReschedule(id) {
+  const b = bookings.find(x=>x.id===id);
+  if(!b || b.status==="Cancelled") return;
+  const date=prompt("New date (YYYY-MM-DD):",b.date);
+  if(!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+  const parsed=new Date(date+"T12:00:00");
+  if(Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0,10)!==date || date<today()) {
+    alert("Invalid date."); return;
+  }
+  const time=prompt("New time (HH:MM):",b.time);
+  if(!time || !getSlotTimes().includes(time)) { alert("Invalid time slot."); return; }
+  const oldDate=b.date,oldTime=b.time;
+  b.date=date;b.time=time;
+  if(!slotAvailable(b.stylistId,date,time,b.id)) {
+    b.date=oldDate;b.time=oldTime;alert("Slot unavailable.");return;
+  }
+  save();refreshAll();
+}
+function unblockTime(i) { blocked.splice(i,1); save(); refreshAll(); }
+function removeService(id) {
+  if(bookings.some(b=>b.serviceId===id && b.status!=="Cancelled")) {
+    alert("This service has active reservations and cannot be removed."); return;
+  }
+  if(!confirm("Remove this service?")) return;
+  services=services.filter(s=>s.id!==id);
+  save();refreshAll();
+}
+function refreshAll() {
+  renderServices(); renderStylists(); updateSlots(); updateSummary();
+  renderCalendar(); renderManager(); renderReviews();
+}
+
+$("bookingDate").min = today();
+$("blockDate").min = today();
+$("year").textContent = new Date().getFullYear();
+$("blockTime").innerHTML = getSlotTimes().map(t=>
+  `<option value="${t}">${timeLabel(t)}</option>`).join("");
+
+$("serviceSelect").addEventListener("change",()=>{updateSlots();updateSummary();});
+$("stylistSelect").addEventListener("change",updateSlots);
+$("bookingDate").addEventListener("change",updateSlots);
+$("bookingTime").addEventListener("change",updateSummary);
+$("paymentPlan").addEventListener("change",updateSummary);
+$("prevMonth").addEventListener("click",()=>{
+  calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()-1,1);renderCalendar();
+});
+$("nextMonth").addEventListener("click",()=>{
+  calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+1,1);renderCalendar();
+});
+
+$("bookingForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const service=serviceById($("serviceSelect").value);
+  const stylist=stylistById($("stylistSelect").value);
+  const date=$("bookingDate").value,time=$("bookingTime").value;
+  if(!service || !stylist || !date || !time) { alert("Please complete all appointment details.");return; }
+  if(!slotAvailable(stylist.id,date,time)) {
+    alert("This slot is no longer available. Please select another time.");
+    updateSlots();return;
+  }
+  if(!confirm("Confirm this appointment? Online payments are simulated in this demo.")) return;
+
+  const total=service.price;
+  const due=$("paymentPlan").value==="deposit"?Math.ceil(total*.30):total;
+  const method=$("paymentMethod").value;
+  const booking={
+    id:"B"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+    name:$("customerName").value.trim(),
+    email:$("customerEmail").value.trim().toLowerCase(),
+    phone:$("customerPhone").value.trim(),
+    serviceId:service.id,serviceName:service.name,
+    stylistId:stylist.id,stylistName:stylist.name,
+    date,time,price:total,due,
+    paymentPlan:$("paymentPlan").value,paymentMethod:method,
+    paymentStatus:method==="Pay at salon"?"Pay at salon":"Pending",
+    status:"Confirmed",
+    notes:$("customerNotes").value.trim(),
+    createdAt:new Date().toISOString()
+  };
+  bookings.push(booking);
+  save();refreshAll();
+  $("bookingNotice").textContent=
+    `Reservation confirmed! Reference: ${booking.id}. `+
+    (method==="Pay at salon" ? "Payment is due at the salon." :
+    `Your ${method} payment is pending; no money has been collected.`);
+  $("bookingNotice").classList.remove("hidden");
+  $("accountEmail").value=booking.email;
+  renderCustomer(booking.email);
+  $("dashboard").scrollIntoView({behavior:"smooth"});
+});
+
+$("accountForm").addEventListener("submit",e=>{
+  e.preventDefault();renderCustomer($("accountEmail").value.trim());
+});
+
+$("managerForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  // Demo-only access code. Replace with server-side authentication in production.
+  if($("managerCode").value==="ELAN2026") {
+    managerUnlocked=true;
+    $("managerDashboard").classList.remove("hidden");
+    $("managerMessage").textContent="Demo dashboard opened.";
+    renderManager();
+  } else {
+    $("managerMessage").textContent="Incorrect demo code.";
+  }
+});
+document.querySelectorAll("[data-filter]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    currentFilter=btn.dataset.filter;
+    document.querySelectorAll("[data-filter]").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");renderManager();
+  });
+});
+
+$("addServiceForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=$("newServiceName").value.trim();
+  const price=Number($("newServicePrice").value);
+  const duration=Number($("newServiceDuration").value);
+  if(!name || !Number.isFinite(price) || price<=0 || price>100000 ||
+     !Number.isInteger(duration) || duration<15 || duration>480) {
+    alert("Enter valid service details.");return;
+  }
+  services.push({id:"v"+Date.now(),name,price,duration,desc:"Professional beauty service.",image:"photo-1560066984-138dadb4c035"});
+  save();refreshAll();e.target.reset();$("newServiceDuration").value=30;
+});
+
+$("blockForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const stylistId=$("blockStylist").value,date=$("blockDate").value,time=$("blockTime").value;
+  if(date<today() || !date) {alert("Choose today or a future date.");return;}
+  if(blocked.some(b=>b.stylistId===stylistId&&b.date===date&&b.time===time)) {
+    alert("This time is already blocked.");return;
+  }
+  if(bookings.some(b=>b.stylistId===stylistId&&b.date===date&&b.time===time&&b.status!=="Cancelled")) {
+    alert("An appointment exists at this time. Reschedule it before blocking the slot.");return;
+  }
+  blocked.push({stylistId,date,time});
+  save();refreshAll();
+});
+
+$("feedbackForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  reviews.unshift({
+    name:$("reviewName").value.trim(),
+    rating:Number($("reviewRating").value),
+    text:$("reviewText").value.trim(),
+    date:today()
+  });
+  save();renderReviews();e.target.reset();
+  $("feedbackMessage").textContent="Thank you for sharing your feedback!";
+});
+function renderReviews() {
+  $("reviews").innerHTML=reviews.slice(0,6).map(r=>`
+    <article class="review">
+      <div class="stars" aria-label="${r.rating} out of 5 stars">${"★".repeat(r.rating)}${"☆".repeat(5-r.rating)}</div>
+      <p>${escapeHTML(r.text)}</p>
+      <strong>${escapeHTML(r.name)}</strong>
+      <span class="help">${escapeHTML(r.date)}</span>
+    </article>`).join("");
+}
+
+renderServices();
+renderStylists();
+updateSlots();
+updateSummary();
+renderCalendar();
+renderReviews();
+</script>
+</body>
+</html>

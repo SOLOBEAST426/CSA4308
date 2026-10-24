@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SweetCrumbs | Online Cake Shop</title>
+<style>
+:root{--pink:#e94e77;--dark:#40252e;--cream:#fff7f3;--border:#f0dce1;--green:#16845b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--cream);color:var(--dark);line-height:1.6}
+header{background:#fff;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;box-shadow:0 2px 12px #40252e0c}
+.logo{font-size:25px;font-weight:800;color:var(--pink)}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:pointer}
+.nav{background:white;color:var(--dark)}
+.nav:hover{background:#fff0f4;color:var(--pink)}
+.primary{background:var(--pink);color:white}
+.secondary{background:#ffe6ed;color:#a92c50}
+.danger{background:#fee2e2;color:#b91c1c}
+main{max-width:1200px;margin:28px auto;padding:0 18px}
+.hero{padding:42px;border-radius:20px;background:linear-gradient(120deg,#7b2945,#e94e77);color:white;margin-bottom:25px}
+.hero h1{font-size:clamp(28px,4vw,43px);line-height:1.2;margin-bottom:12px}
+.hero p{max-width:650px;margin-bottom:20px}
+.panel,.card{background:white;border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px}
+h2{font-size:23px;margin-bottom:15px}
+h3{font-size:17px;margin:8px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--border);border-radius:8px;margin-bottom:13px;font:inherit;background:white}
+textarea{min-height:80px}
+.cake{overflow:hidden;padding:0}
+.cake img{width:100%;height:190px;object-fit:cover;background:#fff0f4}
+.cake-body{padding:16px}
+.price{font-size:21px;font-weight:bold;color:var(--pink)}
+.muted{color:#806b72;font-size:13px}
+.tag{display:inline-block;background:#fff0f4;color:#a92c50;border-radius:20px;padding:4px 9px;font-size:12px;font-weight:bold}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.hidden{display:none!important}
+.notice{padding:12px;border-radius:8px;background:#fff0f4;color:#8d2948;margin:12px 0}
+.success{padding:12px;background:#dcfce7;color:#166534;border-radius:8px;margin:12px 0}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th,td{text-align:left;padding:11px;border-bottom:1px solid var(--border)}
+th{background:#fff4f6}
+.table-wrap{overflow-x:auto}
+footer{text-align:center;padding:25px;color:#806b72}
+@media(max-width:650px){header{padding:15px}nav{width:100%}.nav{padding:8px}main{padding:0 10px;margin-top:15px}.hero{padding:25px 20px}.panel{padding:15px}}
+@media print{header,footer,.no-print,button{display:none!important}body{background:white}main{margin:0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🍰 SweetCrumbs</div>
+  <nav>
+    <button class="nav" onclick="showPage('shop')">Shop Cakes</button>
+    <button class="nav" onclick="showPage('cart')">Cart (<span id="cartCount">0</span>)</button>
+    <button class="nav" onclick="showPage('orders')">My Orders</button>
+    <button class="nav" onclick="showPage('address')">My Address</button>
+    <button class="nav" onclick="showPage('login')">Login</button>
+    <button class="nav" onclick="showPage('adminLogin')">Admin</button>
+  </nav>
+</header>
+
+<main>
+<section id="hero" class="hero">
+  <h1>A little sweetness in every celebration.</h1>
+  <p>Discover freshly inspired cakes for birthdays, anniversaries, weddings and every special moment. Choose your favorite and order online.</p>
+  <button class="primary" onclick="showPage('shop')">Explore Cakes →</button>
+</section>
+
+<!-- SHOP AND FILTERS -->
+<section id="shop" class="page">
+  <div class="panel">
+    <h2>Find Your Perfect Cake</h2>
+    <div class="grid">
+      <div><label for="search">Search cake</label><input id="search" placeholder="Chocolate, vanilla..." oninput="renderCakes()"></div>
+      <div><label for="category">Category</label><select id="category" onchange="updateSubcategories();renderCakes()"><option value="">All Categories</option><option>Birthday</option><option>Wedding</option><option>Anniversary</option><option>Designer</option></select></div>
+      <div><label for="subcategory">Subcategory / Flavor</label><select id="subcategory" onchange="renderCakes()"><option value="">All Flavors</option><option>Chocolate</option><option>Vanilla</option><option>Red Velvet</option><option>Strawberry</option></select></div>
+      <div><label for="maxPrice">Maximum price</label><select id="maxPrice" onchange="renderCakes()"><option value="2000">All prices (up to ₹2,000)</option><option value="500">Under ₹500</option><option value="800">Under ₹800</option><option value="1200">Under ₹1,200</option></select></div>
+    </div>
+  </div>
+  <div class="row"><h2>Our Cakes</h2><span id="cakeCount" class="muted"></span></div>
+  <div id="cakeList" class="grid"></div>
+</section>
+
+<!-- CAKE DETAILS -->
+<section id="details" class="page hidden">
+  <div class="panel" id="cakeDetails"></div>
+</section>
+
+<!-- REGISTER -->
+<section id="register" class="page hidden">
+  <div class="panel" style="max-width:550px;margin:auto">
+    <h2>Create Your Account</h2>
+    <form id="registerForm">
+      <label for="regName">Full name</label><input id="regName" required>
+      <label for="regEmail">Email address</label><input id="regEmail" type="email" required>
+      <label for="regPassword">Password</label><input id="regPassword" type="password" minlength="6" required>
+      <button class="primary">Register</button>
+      <button class="secondary" type="button" onclick="showPage('login')">Already registered? Login</button>
+    </form>
+    <div id="registerMessage"></div>
+  </div>
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="page hidden">
+  <div class="panel" style="max-width:500px;margin:auto">
+    <h2>Customer Login</h2>
+    <form id="loginForm">
+      <label for="loginEmail">Email</label><input id="loginEmail" type="email" required>
+      <label for="loginPassword">Password</label><input id="loginPassword" type="password" required>
+      <button class="primary">Login</button>
+      <button class="secondary" type="button" onclick="showPage('register')">Create Account</button>
+    </form>
+    <div id="loginMessage"></div>
+  </div>
+</section>
+
+<!-- CART -->
+<section id="cart" class="page hidden">
+  <div class="panel">
+    <h2>Shopping Cart</h2>
+    <div id="cartItems"></div>
+    <div class="row"><h3 id="cartTotal">Total: ₹0</h3><button class="primary" onclick="startCheckout()">Proceed to Checkout</button></div>
+  </div>
+</section>
+
+<!-- ADDRESS AND CHECKOUT -->
+<section id="address" class="page hidden">
+  <div class="panel">
+    <h2>Shipping Address</h2>
+    <form id="addressForm">
+      <label for="fullAddressName">Recipient name</label><input id="fullAddressName" required>
+      <label for="phone">Mobile number</label><input id="phone" type="tel" pattern="[0-9]{10}" required>
+      <label for="street">House number and street</label><input id="street" required>
+      <div class="grid">
+        <div><label for="city">City</label><input id="city" required></div>
+        <div><label for="pincode">PIN code</label><input id="pincode" pattern="[0-9]{6}" required></div>
+      </div>
+      <label for="deliveryDate">Preferred delivery date</label><input id="deliveryDate" type="date" required>
+      <button class="primary">Save Address</button>
+    </form>
+    <div id="addressMessage"></div>
+    <button class="secondary" onclick="showPage('cart')">Back to Cart</button>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section id="payment" class="page hidden">
+  <div class="panel">
+    <h2>Checkout and Payment</h2>
+    <div id="checkoutSummary" class="notice"></div>
+    <label for="paymentMethod">Payment method</label>
+    <select id="paymentMethod"><option>Cash on Delivery</option><option>UPI (Demo)</option><option>Card (Demo)</option><option>Net Banking (Demo)</option></select>
+    <p class="muted">Online payment methods are simulated for this lab project. No real payment is collected.</p>
+    <button class="primary" onclick="placeOrder()">Place Order</button>
+    <button class="secondary" onclick="showPage('address')">Edit Address</button>
+  </div>
+</section>
+
+<!-- ORDER CONFIRMATION -->
+<section id="confirmation" class="page hidden">
+  <div class="panel">
+    <h2>Order Confirmed!</h2>
+    <div class="success">Your sample order has been placed successfully.</div>
+    <div id="confirmationDetails"></div>
+    <button class="primary" onclick="window.print()">Print Order</button>
+    <button class="secondary" onclick="showPage('orders')">View My Orders</button>
+    <button class="secondary" onclick="showPage('shop')">Continue Shopping</button>
+  </div>
+</section>
+
+<!-- MY ORDERS / SHIPPING STATUS -->
+<section id="orders" class="page hidden">
+  <div class="panel">
+    <h2>My Orders and Shipping Status</h2>
+    <div id="orderList"></div>
+  </div>
+</section>
+
+<!-- ORDER TRACKING -->
+<section id="tracking" class="page hidden">
+  <div class="panel">
+    <h2>Track Your Order</h2>
+    <div id="trackingDetails"></div>
+    <button class="secondary" onclick="showPage('orders')">Back to Orders</button>
+  </div>
+</section>
+
+<!-- ADMIN LOGIN -->
+<section id="adminLogin" class="page hidden">
+  <div class="panel" style="max-width:500px;margin:auto">
+    <h2>Administrator Login</h2>
+    <form id="adminLoginForm">
+      <label for="adminUsername">Username</label><input id="adminUsername" required>
+      <label for="adminPassword">Password</label><input id="adminPassword" type="password" required>
+      <button class="primary">Login</button>
+    </form>
+    <p class="muted">Demo credentials: admin / admin123</p>
+    <div id="adminLoginMessage"></div>
+  </div>
+</section>
+
+<!-- ADMIN DASHBOARD -->
+<section id="admin" class="page hidden">
+  <div class="row"><h2>Admin Dashboard</h2><button class="danger" onclick="adminLogout()">Logout</button></div>
+  <div class="grid">
+    <div class="panel"><span class="muted">Products</span><h2 id="statProducts">0</h2></div>
+    <div class="panel"><span class="muted">Orders</span><h2 id="statOrders">0</h2></div>
+    <div class="panel"><span class="muted">Sales (demo)</span><h2 id="statSales">₹0</h2></div>
+  </div>
+  <div class="panel">
+    <h2>Manage Products / Post Cake Details</h2>
+    <form id="productForm">
+      <div class="grid">
+        <div><label for="productName">Cake name</label><input id="productName" required></div>
+        <div><label for="productCategory">Category</label><select id="productCategory"><option>Birthday</option><option>Wedding</option><option>Anniversary</option><option>Designer</option></select></div>
+        <div><label for="productFlavor">Flavor</label><select id="productFlavor"><option>Chocolate</option><option>Vanilla</option><option>Red Velvet</option><option>Strawberry</option></select></div>
+        <div><label for="productPrice">Price (₹)</label><input id="productPrice" type="number" min="1" required></div>
+        <div><label for="productWeight">Size</label><select id="productWeight"><option>0.5 kg</option><option>1 kg</option><option>2 kg</option><option>3 kg</option></select></div>
+        <div><label for="productImage">Image URL</label><input id="productImage" type="url" placeholder="https://example.com/cake.jpg"></div>
+      </div>
+      <label for="productDescription">Description</label><textarea id="productDescription" required></textarea>
+      <button class="primary">Add Cake Product</button>
+    </form>
+    <div id="adminProductTable" class="table-wrap"></div>
+  </div>
+  <div class="panel">
+    <h2>Manage Orders and Shipping Location</h2>
+    <div id="adminOrderTable" class="table-wrap"></div>
+  </div>
+  <div class="panel">
+    <h2>Customer Accounts</h2>
+    <div id="customerTable" class="table-wrap"></div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 SweetCrumbs | Internet Programming Lab Experiment 6</footer>
+
+<script>
+const cakeImages={
+ chocolate:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700",
+ vanilla:"https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=700",
+ red:"https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=700",
+ strawberry:"https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=700",
+ wedding:"https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=700"
+};
+let cakes=[
+{id:1,name:"Chocolate Dream Cake",category:"Birthday",flavor:"Chocolate",price:650,weight:"1 kg",image:cakeImages.chocolate,description:"Rich chocolate sponge layered with smooth chocolate cream. Perfect for birthdays and celebrations.",stock:12},
+{id:2,name:"Classic Vanilla Cake",category:"Birthday",flavor:"Vanilla",price:450,weight:"1 kg",image:cakeImages.vanilla,description:"A soft vanilla sponge with creamy frosting and a timeless flavor.",stock:15},
+{id:3,name:"Red Velvet Delight",category:"Anniversary",flavor:"Red Velvet",price:850,weight:"1 kg",image:cakeImages.red,description:"Moist red velvet layers with a rich cream cheese style frosting.",stock:8},
+{id:4,name:"Strawberry Bliss",category:"Birthday",flavor:"Strawberry",price:600,weight:"1 kg",image:cakeImages.strawberry,description:"A fruity strawberry cake with light cream and a delightful finish.",stock:10},
+{id:5,name:"Elegant Wedding Cake",category:"Wedding",flavor:"Vanilla",price:1800,weight:"2 kg",image:cakeImages.wedding,description:"An elegant celebration cake designed for weddings and special occasions.",stock:5},
+{id:6,name:"Designer Chocolate Cake",category:"Designer",flavor:"Chocolate",price:1100,weight:"1 kg",image:cakeImages.chocolate,description:"A premium decorative chocolate cake for unforgettable celebrations.",stock:7}
+];
+let cart=[];
+let orders=[];
+let users=[];
+let address=null;
+let loggedInUser=null;
+let adminAuthenticated=false;
+let activeCake=null;
+let nextOrderId=1001;
+
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function money(v){return "₹"+Number(v).toLocaleString("en-IN")}
+function showPage(id){
+ if(id==="admin"&&!adminAuthenticated){id="adminLogin"}
+ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ document.getElementById("hero").classList.toggle("hidden",id!=="shop");
+ if(id==="shop")renderCakes();
+ if(id==="cart")renderCart();
+ if(id==="orders")renderOrders();
+ if(id==="admin")renderAdmin();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function updateSubcategories(){renderCakes()}
+function renderCakes(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const category=document.getElementById("category").value;
+ const flavor=document.getElementById("subcategory").value;
+ const max=Number(document.getElementById("maxPrice").value);
+ const filtered=cakes.filter(c=>
+  (c.name.toLowerCase().includes(q)||c.flavor.toLowerCase().includes(q)||c.description.toLowerCase().includes(q))&&
+  (!category||c.category===category)&&(!flavor||c.flavor===flavor)&&c.price<=max&&c.stock>0
+ );
+ document.getElementById("cakeCount").textContent=filtered.length+" cakes found";
+ document.getElementById("cakeList").innerHTML=filtered.length?filtered.map(c=>`
+ <article class="card cake">
+  <img src="${esc(c.image)}" alt="${esc(c.name)}" onerror="this.src='${cakeImages.chocolate}'">
+  <div class="cake-body">
+   <span class="tag">${esc(c.category)}</span>
+   <h3>${esc(c.name)}</h3>
+   <p class="muted">${esc(c.flavor)} · ${esc(c.weight)} · ${c.stock} available</p>
+   <p>${esc(c.description)}</p>
+   <div class="row"><span class="price">${money(c.price)}</span><button class="secondary" onclick="viewCake(${c.id})">Details</button></div>
+   <button class="primary" style="width:100%;margin-top:10px" onclick="addToCart(${c.id})">Add to Cart</button>
+  </div>
+ </article>`).join(""):"<div class='panel'>No cakes match your filters. Try another category or price range.</div>";
+}
+function viewCake(id){
+ const c=cakes.find(x=>x.id===id);if(!c)return;activeCake=c;
+ document.getElementById("cakeDetails").innerHTML=`
+ <div class="grid">
+ <img src="${esc(c.image)}" alt="${esc(c.name)}" style="width:100%;max-height:350px;object-fit:cover;border-radius:12px">
+ <div><span class="tag">${esc(c.category)}</span><h2>${esc(c.name)}</h2><p>${esc(c.description)}</p>
+ <p>Flavor: ${esc(c.flavor)}</p><p>Standard size: ${esc(c.weight)}</p><p>Stock available: ${c.stock}</p><h2 class="price">${money(c.price)}</h2>
+ <label for="customSize">Choose size</label><select id="customSize"><option value="0.5">0.5 kg</option><option value="1" selected>1 kg</option><option value="2">2 kg</option><option value="3">3 kg</option></select>
+ <label for="cakeMessage">Personalized cake message</label><input id="cakeMessage" maxlength="50" placeholder="Happy Birthday!">
+ <label for="cakeQty">Quantity</label><input id="cakeQty" type="number" min="1" max="${c.stock}" value="1">
+ <button class="primary" onclick="addCustomizedCake()">Add Customized Cake</button>
+ <button class="secondary" onclick="showPage('shop')">Back to Shop</button></div></div>`;
+ showPage("details");
+}
+function addCustomizedCake(){
+ const size=Number(document.getElementById("customSize").value);
+ const qty=Number(document.getElementById("cakeQty").value);
+ const message=document.getElementById("cakeMessage").value.trim();
+ if(!activeCake||qty<1||qty>activeCake.stock){alert("Enter a valid quantity.");return}
+ const unitPrice=Math.round(activeCake.price*size);
+ cart.push({cakeId:activeCake.id,name:activeCake.name,size:size+" kg",message,qty,unitPrice});
+ updateCartCount();alert("Cake added to cart.");showPage("cart");
+}
+function addToCart(id){
+ const c=cakes.find(x=>x.id===id);if(!c||c.stock<1)return;
+ cart.push({cakeId:c.id,name:c.name,size:c.weight,message:"",qty:1,unitPrice:c.price});
+ updateCartCount();alert("Cake added to cart.");
+}
+function updateCartCount(){document.getElementById("cartCount").textContent=cart.reduce((s,x)=>s+x.qty,0)}
+function renderCart(){
+ const box=document.getElementById("cartItems");
+ if(!cart.length){box.innerHTML="<p>Your cart is empty. Browse our cakes to get started.</p>";document.getElementById("cartTotal").textContent="Total: ₹0";return}
+ box.innerHTML=cart.map((x,i)=>`<div class="row" style="padding:12px 0;border-bottom:1px solid #f0dce1"><div><b>${esc(x.name)}</b><p class="muted">${esc(x.size)} · Message: ${esc(x.message||"None")} · Qty: ${x.qty}</p></div><b>${money(x.unitPrice*x.qty)}</b><button class="danger" onclick="removeCartItem(${i})">Remove</button></div>`).join("");
+ document.getElementById("cartTotal").textContent="Total: "+money(cart.reduce((s,x)=>s+x.unitPrice*x.qty,0));
+}
+function removeCartItem(i){cart.splice(i,1);updateCartCount();renderCart()}
+function startCheckout(){
+ if(!cart.length){alert("Please add a cake to your cart first.");return}
+ showPage("address");
+ if(address){
+  document.getElementById("fullAddressName").value=address.name;
+  document.getElementById("phone").value=address.phone;
+  document.getElementById("street").value=address.street;
+  document.getElementById("city").value=address.city;
+  document.getElementById("pincode").value=address.pincode;
+ }
+}
+document.getElementById("addressForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ address={
+  name:document.getElementById("fullAddressName").value.trim(),
+  phone:document.getElementById("phone").value.trim(),
+  street:document.getElementById("street").value.trim(),
+  city:document.getElementById("city").value.trim(),
+  pincode:document.getElementById("pincode").value.trim(),
+  deliveryDate:document.getElementById("deliveryDate").value
+ };
+ document.getElementById("addressMessage").innerHTML='<div class="success">Shipping address saved.</div>';
+ document.getElementById("checkoutSummary").innerHTML=
+  `<b>Delivery to:</b> ${esc(address.name)}, ${esc(address.street)}, ${esc(address.city)} - ${esc(address.pincode)}<br><b>Preferred date:</b> ${esc(address.deliveryDate)}<br><b>Total:</b> ${money(cart.reduce((s,x)=>s+x.unitPrice*x.qty,0))}`;
+ showPage("payment");
+});
+function placeOrder(){
+ if(!cart.length||!address){alert("Please add cakes and enter a shipping address.");return}
+ for(const item of cart){
+  const c=cakes.find(x=>x.id===item.cakeId);
+  if(!c||c.stock<item.qty){alert("Insufficient stock for "+item.name);return}
+ }
+ cart.forEach(item=>{const c=cakes.find(x=>x.id===item.cakeId);c.stock-=item.qty});
+ const order={
+  id:"SC"+nextOrderId++,items:cart.map(x=>({...x})),
+  total:cart.reduce((s,x)=>s+x.unitPrice*x.qty,0),
+  address:{...address},payment:document.getElementById("paymentMethod").value,
+  status:"Order Placed",date:new Date().toLocaleDateString(),
+  customer:loggedInUser?loggedInUser.name:address.name
+ };
+ orders.push(order);cart=[];updateCartCount();
+ document.getElementById("confirmationDetails").innerHTML=`
+ <div class="panel"><h3>Order ID: ${esc(order.id)}</h3><p>Customer: ${esc(order.customer)}</p>
+ <p>Delivery address: ${esc(order.address.street)}, ${esc(order.address.city)} - ${esc(order.address.pincode)}</p>
+ <p>Preferred delivery: ${esc(order.address.deliveryDate)}</p><p>Payment: ${esc(order.payment)}</p><h3>Total: ${money(order.total)}</h3>
+ ${order.items.map(i=>`<p>${esc(i.name)} (${esc(i.size)}) × ${i.qty} — ${money(i.unitPrice*i.qty)}</p>`).join("")}</div>`;
+ showPage("confirmation");
+}
+function renderOrders(){
+ const box=document.getElementById("orderList");
+ if(!orders.length){box.innerHTML="<p>No orders yet. Place an order to see your order history.</p>";return}
+ box.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Order ID</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody>`+
+ orders.map(o=>`<tr><td>${esc(o.id)}</td><td>${esc(o.date)}</td><td>${o.items.map(i=>esc(i.name)+" × "+i.qty).join("<br>")}</td><td>${money(o.total)}</td><td>${esc(o.status)}</td><td><button class="secondary" onclick="trackOrder('${o.id}')">Track</button> <button class="secondary" onclick="printOrder('${o.id}')">Print</button></td></tr>`).join("")+
+ `</tbody></table></div>`;
+}
+function trackOrder(id){
+ const o=orders.find(x=>x.id===id);if(!o)return;
+ document.getElementById("trackingDetails").innerHTML=`
+ <div class="notice"><h3>Order ${esc(o.id)}</h3><p>Current status: <b>${esc(o.status)}</b></p>
+ <p>Shipping location: ${esc(o.address.city)}, ${esc(o.address.pincode)}</p>
+ <p>Delivery address: ${esc(o.address.street)}</p><p>Expected delivery: ${esc(o.address.deliveryDate)}</p></div>`;
+ showPage("tracking");
+}
+function printOrder(id){
+ const o=orders.find(x=>x.id===id);if(!o)return;
+ document.getElementById("confirmationDetails").innerHTML=`<div class="ticket"><h2>SweetCrumbs Order Receipt</h2><h3>${esc(o.id)}</h3><p>${esc(o.customer)}</p><p>${esc(o.address.street)}, ${esc(o.address.city)} - ${esc(o.address.pincode)}</p>${o.items.map(i=>`<p>${esc(i.name)} × ${i.qty}: ${money(i.unitPrice*i.qty)}</p>`).join("")}<h3>Total: ${money(o.total)}</h3><p>Status: ${esc(o.status)}</p></div>`;
+ showPage("confirmation");
+ setTimeout(()=>window.print(),200);
+}
+document.getElementById("registerForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const email=document.getElementById("regEmail").value.trim().toLowerCase();
+ if(users.some(u=>u.email===email)){document.getElementById("registerMessage").innerHTML='<div class="notice">This email is already registered.</div>';return}
+ users.push({name:document.getElementById("regName").value.trim(),email,password:document.getElementById("regPassword").value});
+ document.getElementById("registerMessage").innerHTML='<div class="success">Registration successful. You can now log in.</div>';
+ e.target.reset();
+});
+document.getElementById("loginForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const email=document.getElementById("loginEmail").value.trim().toLowerCase();
+ const pass=document.getElementById("loginPassword").value;
+ const user=users.find(u=>u.email===email&&u.password===pass);
+ if(!user){document.getElementById("loginMessage").innerHTML='<div class="notice">Invalid credentials. Register first if you do not have an account.</div>';return}
+ loggedInUser=user;
+ document.getElementById("loginMessage").innerHTML='<div class="success">Welcome, '+esc(user.name)+'!</div>';
+});
+document.getElementById("adminLoginForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ if(document.getElementById("adminUsername").value==="admin"&&document.getElementById("adminPassword").value==="admin123"){
+  adminAuthenticated=true;showPage("admin");
+ }else document.getElementById("adminLoginMessage").innerHTML='<div class="notice">Invalid demo login.</div>';
+});
+function adminLogout(){adminAuthenticated=false;showPage("shop")}
+document.getElementById("productForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ cakes.push({
+  id:Math.max(0,...cakes.map(c=>c.id))+1,
+  name:document.getElementById("productName").value.trim(),
+  category:document.getElementById("productCategory").value,
+  flavor:document.getElementById("productFlavor").value,
+  price:Number(document.getElementById("productPrice").value),
+  weight:document.getElementById("productWeight").value,
+  image:document.getElementById("productImage").value.trim()||cakeImages.chocolate,
+  description:document.getElementById("productDescription").value.trim(),stock:10
+ });
+ e.target.reset();renderAdmin();alert("Cake product added.");
+});
+function renderAdmin(){
+ document.getElementById("statProducts").textContent=cakes.length;
+ document.getElementById("statOrders").textContent=orders.length;
+ document.getElementById("statSales").textContent=money(orders.reduce((s,o)=>s+o.total,0));
+ document.getElementById("adminProductTable").innerHTML=`<h3>Product Inventory</h3><table><thead><tr><th>Cake</th><th>Category</th><th>Price</th><th>Stock</th><th>Action</th></tr></thead><tbody>`+
+ cakes.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.category)}</td><td>${money(c.price)}</td><td><input aria-label="Stock for ${esc(c.name)}" type="number" min="0" value="${c.stock}" id="stock${c.id}" style="width:85px;margin:0"></td><td><button class="secondary" onclick="saveStock(${c.id})">Update</button> <button class="danger" onclick="deleteCake(${c.id})">Delete</button></td></tr>`).join("")+
+ `</tbody></table>`;
+ document.getElementById("adminOrderTable").innerHTML=orders.length?`<table><thead><tr><th>Order</th><th>Customer</th><th>Shipping location</th><th>Total</th><th>Status</th><th>Update status</th></tr></thead><tbody>`+
+ orders.map(o=>`<tr><td>${esc(o.id)}</td><td>${esc(o.customer)}</td><td>${esc(o.address.city)} - ${esc(o.address.pincode)}</td><td>${money(o.total)}</td><td>${esc(o.status)}</td><td><select id="status${o.id}"><option ${o.status==="Order Placed"?"selected":""}>Order Placed</option><option ${o.status==="Preparing"?"selected":""}>Preparing</option><option ${o.status==="Out for Delivery"?"selected":""}>Out for Delivery</option><option ${o.status==="Delivered"?"selected":""}>Delivered</option><option ${o.status==="Cancelled"?"selected":""}>Cancelled</option></select><button class="secondary" onclick="updateOrder('${o.id}')">Save</button></td></tr>`).join("")+
+ `</tbody></table>`:"<p>No orders yet.</p>";
+ document.getElementById("customerTable").innerHTML=users.length?`<table><thead><tr><th>Name</th><th>Email</th></tr></thead><tbody>`+users.map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td></tr>`).join("")+`</tbody></table>`:"<p>No registered customers yet.</p>";
+}
+function saveStock(id){
+ const c=cakes.find(x=>x.id===id);const n=Number(document.getElementById("stock"+id).value);
+ if(!Number.isInteger(n)||n<0){alert("Enter a valid stock count.");return}
+ c.stock=n;renderAdmin();renderCakes();
+}
+function deleteCake(id){
+ if(!confirm("Delete this cake product?"))return;
+ cakes=cakes.filter(c=>c.id!==id);renderAdmin();renderCakes();
+}
+function updateOrder(id){
+ const o=orders.find(x=>x.id===id);if(!o)return;
+ o.status=document.getElementById("status"+id).value;
+ renderAdmin();alert("Order status updated.");
+}
+document.getElementById("deliveryDate").min=new Date().toISOString().split("T")[0];
+renderCakes();
+</script>
+</body>
+</html>
